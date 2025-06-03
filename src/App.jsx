@@ -1,6 +1,8 @@
 import React from "react"
-import "./App.css"
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
+import Home from "./components/Home"
 import CarList from "./components/CarList"
+import "./App.css"
 
 const cars = [
   {
@@ -26,15 +28,14 @@ const cars = [
   // Add more cars as needed
 ]
 
-const App = () => {
-  return (
-    <main className="App">
-      <header>
-        <h1>Car Listings</h1>
-      </header>
-      <CarList cars={cars} />
-    </main>
-  )
-}
+const App = () => (
+  <Router>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/cars" element={<CarList cars={cars} />} />
+      <Route path="*" element={<Navigate to="/" />} />
+    </Routes>
+  </Router>
+)
 
 export default App
