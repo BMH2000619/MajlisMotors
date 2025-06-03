@@ -4,10 +4,15 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Inter", Arial, sans-serif;
-  background: #f4f6fb;
-  color: #222;
+  font-family: "Inter", "Roboto", Arial, sans-serif;
   min-height: 100vh;
+  color: #222;
+  background: linear-gradient(
+      rgba(244, 246, 251, 0.5),
+      rgba(227, 230, 240, 0.5)
+    ),
+    url("./images/1969.jpg") no-repeat center center fixed;
+  background-size: cover;
 }
 
 main.App {
@@ -28,31 +33,108 @@ h1 {
   letter-spacing: 1px;
 }
 
+/* Modern navbar layout */
 .navbar {
   width: 100%;
   background: #1a237e;
-  padding: 16px 0;
+  padding: 0;
   margin-bottom: 32px;
   box-shadow: 0 2px 8px rgba(30, 34, 90, 0.07);
 }
 
-.navbar-title {
-  max-width: 900px;
+.navbar-content {
+  max-width: 1100px;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  height: 64px;
+  position: relative;
+}
+
+.navbar-left {
+  position: absolute;
+  left: 32px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.navbar-title-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  pointer-events: none; /* Allows links on the right to be clickable */
+}
+
+.navbar-title {
   color: #fff;
   font-weight: 700;
   font-size: 1.3rem;
   letter-spacing: 1px;
-  text-align: center;
+  pointer-events: auto;
+}
+
+.navbar-home-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  padding: 7px 18px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  pointer-events: auto; /* Make the title link clickable */
+}
+
+.navbar-home-link:hover {
+  background: #283593;
+  color: #90caf9;
+}
+
+.navbar-links {
+  margin-left: auto;
+  display: flex;
+  gap: 18px;
+  list-style: none;
+  align-items: center;
+  z-index: 1;
+}
+
+.navbar-links-right {
+  margin-left: auto;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 7px 18px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar-links a:hover {
+  background: #283593;
+  color: #90caf9;
 }
 
 .car-category-container {
   max-width: 700px;
   margin: 32px auto;
   padding: 28px 24px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85); /* semi-transparent white */
   border-radius: 18px;
-  box-shadow: 0 4px 24px rgba(30, 34, 90, 0.1);
+  box-shadow: 0 4px 24px rgba(30, 34, 90, 0.13);
   transition: box-shadow 0.2s;
 }
 
@@ -108,9 +190,9 @@ h1 {
   max-width: 700px;
   margin: 32px auto 0 auto;
   padding: 20px 24px;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.85); /* semi-transparent white */
   border-radius: 14px;
-  box-shadow: 0 2px 12px rgba(30,34,90,0.07);
+  box-shadow: 0 2px 12px rgba(30, 34, 90, 0.07);
   text-align: center;
 }
 
@@ -147,6 +229,77 @@ h1 {
   letter-spacing: 0.5px;
 }
 
+.sigin-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.85); /* semi-transparent white */
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(30, 34, 90, 0.13);
+}
+
+.sigin-title {
+  text-align: center;
+  color: #1a237e;
+}
+
+.sigin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sigin-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.sigin-button {
+  background: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.navbar-actions-box {
+  display: flex;
+  gap: 12px;
+  background: #232e6b;
+  padding: 6px 18px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(30, 34, 90, 0.07);
+  align-items: center;
+  margin-left: auto;
+  z-index: 2;
+}
+
+.navbar-action-btn {
+  color: #fff;
+  background: #3949ab;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 7px 18px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  border: none;
+  outline: none;
+  display: inline-block;
+}
+
+.navbar-action-btn:hover {
+  background: #283593;
+  color: #90caf9;
+}
+
 @media (max-width: 700px) {
   .car-category-container {
     padding: 16px 8px;
@@ -158,4 +311,12 @@ h1 {
   .category-title {
     font-size: 1.05rem;
   }
+}
+
+h1,
+h2,
+h3,
+.navbar-title,
+.navbar-home-link {
+  font-family: "Inter", "Roboto", Arial, sans-serif;
 }

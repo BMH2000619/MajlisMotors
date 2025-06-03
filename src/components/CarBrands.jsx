@@ -1,10 +1,7 @@
 import React, { useState } from "react"
 
-const CarBrands = ({ cars }) => {
+const CarBrands = ({ brands }) => {
   const [open, setOpen] = useState(false)
-
-  // Get unique brands
-  const brands = [...new Set(cars.map((car) => car.make))]
 
   return (
     <section className="car-brands-container">
