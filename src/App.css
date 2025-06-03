@@ -1,4 +1,99 @@
+/* Example CSS for Car Details Categories */
+/* You can add this to your App.css or a new CSS file */
+
 body {
   margin: 0;
-  box-sizing: border-box;
+  padding: 0;
+  font-family: "Inter", Arial, sans-serif;
+  background: #f4f6fb;
+  color: #222;
+  min-height: 100vh;
+}
+
+main.App {
+  min-height: 100vh;
+  padding: 32px 0;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+.car-category-container {
+  max-width: 700px;
+  margin: 32px auto;
+  padding: 28px 24px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(30, 34, 90, 0.1);
+  transition: box-shadow 0.2s;
+}
+
+.car-category-container:hover {
+  box-shadow: 0 8px 32px rgba(30, 34, 90, 0.16);
+}
+
+.category-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #283593;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #e3e6f0;
+  padding-bottom: 7px;
+  letter-spacing: 0.5px;
+}
+
+.car-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.car-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid #f1f3f6;
+  transition: background 0.15s;
+}
+
+.car-detail-item:last-child {
+  border-bottom: none;
+}
+
+.car-detail-label {
+  color: #616161;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+}
+
+.car-detail-value {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+}
+
+@media (max-width: 700px) {
+  .car-category-container {
+    padding: 16px 8px;
+    margin: 20px 4px;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .category-title {
+    font-size: 1.05rem;
+  }
 }
