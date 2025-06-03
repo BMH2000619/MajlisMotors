@@ -1,7 +1,15 @@
 import React from "react"
 
 const CarDetails = ({ car }) => {
-  if (!car) return null
+  if (!car)
+    return (
+      <div className="car-category-container">
+        <div className="category-title">Car Details</div>
+        <p style={{ color: "#757575", textAlign: "center" }}>
+          No car selected.
+        </p>
+      </div>
+    )
 
   const categories = [
     {
@@ -30,12 +38,21 @@ const CarDetails = ({ car }) => {
   ]
 
   return (
-    <div className="car-category-container">
+    <section className="car-category-container" aria-label="Car Details">
+      <h2 className="category-title" style={{ marginBottom: 24 }}>
+        {car.make} {car.model}{" "}
+        <span style={{ color: "#757575", fontWeight: 400 }}>({car.year})</span>
+      </h2>
       {categories.map(
         (cat, idx) =>
           cat.details.some((d) => d.value) && (
-            <div key={idx}>
-              <div className="category-title">{cat.title}</div>
+            <div key={idx} style={{ marginBottom: 20 }}>
+              <h3
+                className="category-title"
+                style={{ fontSize: "1.1rem", marginBottom: 10 }}
+              >
+                {cat.title}
+              </h3>
               <ul className="car-details-list">
                 {cat.details.map(
                   (detail, i) =>
@@ -50,7 +67,7 @@ const CarDetails = ({ car }) => {
             </div>
           )
       )}
-    </div>
+    </section>
   )
 }
 

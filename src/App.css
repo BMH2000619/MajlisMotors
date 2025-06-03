@@ -33,7 +33,7 @@ h1 {
   background: #1a237e;
   padding: 16px 0;
   margin-bottom: 32px;
-  box-shadow: 0 2px 8px rgba(30,34,90,0.07);
+  box-shadow: 0 2px 8px rgba(30, 34, 90, 0.07);
 }
 
 .navbar-title {
@@ -101,6 +101,50 @@ h1 {
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.2px;
+}
+
+/* Add to App.css */
+.car-brands-container {
+  max-width: 700px;
+  margin: 32px auto 0 auto;
+  padding: 20px 24px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(30,34,90,0.07);
+  text-align: center;
+}
+
+.car-brands-toggle {
+  background: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: background 0.2s;
+}
+
+.car-brands-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.car-brand-item {
+  background: #e3e6f0;
+  color: #1a237e;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
 }
 
 @media (max-width: 700px) {

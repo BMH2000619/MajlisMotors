@@ -2,6 +2,7 @@ import React from "react"
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 import Home from "./components/Home"
 import CarList from "./components/CarList"
+import CarBrands from "./components/CarBrands"
 import "./App.css"
 
 const cars = [
@@ -29,6 +30,7 @@ const cars = [
 
 const App = () => (
   <Router>
+    <CarBrands cars={cars} />
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/cars" element={<CarList cars={cars} />} />
