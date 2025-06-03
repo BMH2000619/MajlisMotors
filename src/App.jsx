@@ -7,6 +7,7 @@ import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import SignOut from "./pages/SignOut"
 import "./App.css"
+import backgroundsound from "../public/assets/WhatsApp Video 2025-06-03 at 16.11.50.mp3"
 
 const cars = [
   {
@@ -70,6 +71,14 @@ const App = () => {
   return (
     <Router>
       <Navbar />
+      <audio
+        ref={(audio) => {
+          if (audio) audio.volume = 0.2
+        }}
+        src={backgroundsound}
+        autoPlay
+        loop
+      />
       <Routes>
         <Route path="/" element={<Home brands={brands} />} />
         <Route path="/cars" element={<CarList cars={cars} />} />
