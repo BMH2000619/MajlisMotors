@@ -28,6 +28,24 @@ h1 {
   letter-spacing: 1px;
 }
 
+.navbar {
+  width: 100%;
+  background: #1a237e;
+  padding: 16px 0;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(30,34,90,0.07);
+}
+
+.navbar-title {
+  max-width: 900px;
+  margin: 0 auto;
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
 .car-category-container {
   max-width: 700px;
   margin: 32px auto;
@@ -83,24 +101,6 @@ h1 {
   font-weight: 600;
   font-size: 1rem;
   letter-spacing: 0.2px;
-}
-
-.navbar {
-  width: 100%;
-  background: #1a237e;
-  padding: 16px 0;
-  margin-bottom: 32px;
-  box-shadow: 0 2px 8px rgba(30, 34, 90, 0.07);
-}
-
-.navbar-title {
-  max-width: 900px;
-  margin: 0 auto;
-  color: #fff;
-  font-weight: 700;
-  font-size: 1.3rem;
-  letter-spacing: 1px;
-  text-align: center;
 }
 
 @media (max-width: 700px) {
