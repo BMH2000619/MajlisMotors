@@ -1,22 +1,42 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
+import { RegisterUser } from '../services/Auth'
 
 const Signup = ({ setUser }) => {
-  const [username, setUsername] = useState("")
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
-  const [confirmPassword, setConfirmPassword] = useState("")
-  const [phone, setPhone] = useState("")
-  const [error, setError] = useState("")
+  const [username, setUsername] = useState('')
+  const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+  const [img, setImg] = useState(null)
+  const [error, setError] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     if (password !== confirmPassword) {
-      setError("Passwords do not match.")
+      setError('Passwords do not match.')
       return
     }
-    setError("")
-    setUser(username)
-    alert(`Signed up as: ${username} (${email})`)
+    setError('')
+    const user = {
+      username,
+      firstName,
+      lastName,
+      email,
+      password,
+      img
+    }
+    setUser(user)
+    await RegisterUser({
+      username: username,
+      firstName: firstName,
+      lastName: lastName,
+      email: email,
+      password: password,
+      img: img // Optional, include only if uploading
+    })
+
+    alert(`Signed up as: ${firstName} ${lastName} (${email})`)
   }
 
   return (
@@ -35,6 +55,28 @@ const Signup = ({ setUser }) => {
           />
         </label>
         <label>
+          First Name:
+          <input
+            type="text"
+            value={firstName}
+            required
+            onChange={(e) => setFirstName(e.target.value)}
+            className="sigin-input"
+            placeholder="Enter your first name"
+          />
+        </label>
+        <label>
+          Last Name:
+          <input
+            type="text"
+            value={lastName}
+            required
+            onChange={(e) => setLastName(e.target.value)}
+            className="sigin-input"
+            placeholder="Enter your last name"
+          />
+        </label>
+        <label>
           Email:
           <input
             type="email"
@@ -43,16 +85,6 @@ const Signup = ({ setUser }) => {
             onChange={(e) => setEmail(e.target.value)}
             className="sigin-input"
             placeholder="Enter your email"
-          />
-        </label>
-        <label>
-          Phone:
-          <input
-            type="tel"
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
-            className="sigin-input"
-            placeholder="Optional"
           />
         </label>
         <label>
@@ -77,8 +109,17 @@ const Signup = ({ setUser }) => {
             placeholder="Confirm your password"
           />
         </label>
+        <label>
+          Profile Image (optional):
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) => setImg(e.target.files[0])}
+            className="sigin-input"
+          />
+        </label>
         {error && (
-          <div style={{ color: "red", textAlign: "center" }}>{error}</div>
+          <div style={{ color: 'red', textAlign: 'center' }}>{error}</div>
         )}
         <button type="submit" className="sigin-button">
           Sign Up
