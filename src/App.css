@@ -11,7 +11,7 @@ body {
       rgba(244, 246, 251, 0.5),
       rgba(227, 230, 240, 0.5)
     ),
-    url("./images/1969.jpg") no-repeat center center fixed;
+    url("../public/images/1969.jpg") no-repeat center center fixed;
   background-size: cover;
 }
 
@@ -349,6 +349,203 @@ h1 {
   background: rgb(74, 0, 128); /* dark violet */
   color: #90caf9;
   box-shadow: 0 4px 16px rgba(196, 113, 245, 0.18);
+}
+
+/* Home & About container box styles */
+.navbar-left-links-box {
+  display: flex;
+  gap: 10px;
+  background: rgba(74, 0, 128, 0.92);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.13);
+  padding: 4px 18px;
+  align-items: center;
+}
+
+.navbar-home-link,
+.navbar-about-link {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 4px 10px;
+  border-radius: 5px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar-home-link:hover,
+.navbar-about-link:hover {
+  background: rgba(138, 43, 226, 0.18);
+  color: #90caf9;
+}
+
+.search-form {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin: 24px 0;
+}
+
+.search-input {
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: 1px solid #bbb;
+  font-size: 1rem;
+  min-width: 220px;
+}
+
+.search-btn {
+  background: #4a0080; /* dark violet */
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
+
+.search-btn:hover {
+  background: #32005a;
+  color: #b39ddb;
+}
+
+.car-card {
+  margin-bottom: 32px;
+  background: rgba(74, 0, 128, 0.92);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(74, 0, 128, 0.13), 0 1.5px 8px rgba(0, 0, 0, 0.1);
+  color: #f3eaff;
+  padding: 28px 28px 20px 28px;
+  max-width: 370px;
+  margin-left: auto;
+  margin-right: auto;
+  transition: transform 0.18s, box-shadow 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+
+.car-card-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 18px;
+  color: #fff;
+  text-shadow: 0 2px 8px rgba(74, 0, 128, 0.13);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.car-card-emoji {
+  font-size: 1.5rem;
+}
+
+.car-card-year {
+  color: #b39ddb;
+  font-weight: 400;
+}
+
+.car-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.car-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 1.08rem;
+}
+
+.car-detail-label {
+  color: #b39ddb;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+.car-detail-value {
+  color: #fff;
+  font-weight: 500;
+}
+
+.car-detail-price {
+  color: #ffd54f;
+  font-weight: 700;
+}
+
+/* Flipping Card Styles */
+.car-card-flip-container {
+  perspective: 1200px;
+  width: 370px;
+  height: 320px;
+  margin: 32px auto;
+  cursor: pointer;
+  outline: none;
+}
+.car-card-flip {
+  width: 100%;
+  height: 100%;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(74, 0, 128, 0.13), 0 1.5px 8px rgba(0, 0, 0, 0.1);
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  background: rgba(74, 0, 128, 0.92);
+  color: #f3eaff;
+  transition: transform 0.6s cubic-bezier(0.4, 2, 0.6, 1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.car-card-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.car-card-back {
+  transform: rotateY(180deg);
+  padding: 28px 28px 20px 28px;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.car-card-flip-container {
+  position: relative;
+}
+.car-card-flip-container.flipped .car-card-front {
+  transform: rotateY(180deg);
+}
+.car-card-flip-container.flipped .car-card-back {
+  transform: rotateY(0deg);
+  z-index: 3;
+}
+.car-card-img {
+  width: 100%;
+  height: 170px;
+  object-fit: cover;
+  border-radius: 18px 18px 0 0;
+  margin-bottom: 18px;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(74, 0, 128, 0.1);
+}
+.car-card-flip-hint {
+  margin-top: 18px;
+  color: #b39ddb;
+  font-size: 0.98rem;
+  text-align: center;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
 }
 
 @media (max-width: 700px) {
