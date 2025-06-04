@@ -1,4 +1,373 @@
+/* Example CSS for Car Details Categories */
+/* You can add this to your App.css or a new CSS file */
+
 body {
   margin: 0;
-  box-sizing: border-box;
+  padding: 0;
+  font-family: "Inter", "Roboto", Arial, sans-serif;
+  min-height: 100vh;
+  color: #222;
+  background: linear-gradient(
+      rgba(244, 246, 251, 0.5),
+      rgba(227, 230, 240, 0.5)
+    ),
+    url("./images/1969.jpg") no-repeat center center fixed;
+  background-size: cover;
+}
+
+main.App {
+  min-height: 100vh;
+  padding: 32px 0;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a237e;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+/* Modern navbar layout */
+.navbar {
+  width: 100%;
+  background: rgb(74, 0, 128); /* dark violet */
+  padding: 0;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 16px 4px rgba(138, 43, 226, 0.45),
+    0 0 32px 8px rgba(196, 113, 245, 0.25);
+  position: relative;
+  /* Glowing animated effect */
+  animation: navbarGlowDarkViolet 3s linear infinite alternate;
+}
+
+@keyframes navbarGlowDarkViolet {
+  0% {
+    box-shadow: 0 2px 16px 4px rgba(138, 43, 226, 0.45),
+      0 0 32px 8px rgba(196, 113, 245, 0.25);
+    background: rgb(74, 0, 128);
+  }
+  50% {
+    box-shadow: 0 4px 32px 8px rgba(196, 113, 245, 0.55),
+      0 0 48px 12px rgba(250, 113, 205, 0.35);
+    background: rgb(111, 53, 160);
+  }
+  100% {
+    box-shadow: 0 2px 16px 4px rgba(250, 113, 205, 0.35),
+      0 0 32px 8px rgba(138, 43, 226, 0.25);
+    background: rgb(74, 0, 128);
+  }
+}
+
+.navbar-content {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 32px;
+  height: 64px;
+  position: relative;
+}
+
+.navbar-left {
+  position: absolute;
+  left: 32px;
+  top: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  z-index: 2;
+}
+
+.navbar-title-wrapper {
+  position: absolute;
+  left: 0;
+  right: 0;
+  text-align: center;
+  pointer-events: none; /* Allows links on the right to be clickable */
+}
+
+.navbar-title {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  pointer-events: auto;
+}
+
+.navbar-home-link {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.5px;
+  padding: 7px 18px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+  pointer-events: auto; /* Make the title link clickable */
+}
+
+.navbar-home-link:hover {
+  background: #283593;
+  color: #90caf9;
+}
+
+.navbar-links {
+  margin-left: auto;
+  display: flex;
+  gap: 18px;
+  list-style: none;
+  align-items: center;
+  z-index: 1;
+}
+
+.navbar-links-right {
+  margin-left: auto;
+}
+
+.navbar-links li {
+  display: inline;
+}
+
+.navbar-links a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 7px 18px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar-links a:hover {
+  background: #283593;
+  color: #90caf9;
+}
+
+.car-category-container {
+  max-width: 700px;
+  margin: 32px auto;
+  padding: 28px 24px;
+  background: rgba(255, 255, 255, 0.85); /* semi-transparent white */
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(30, 34, 90, 0.13);
+  transition: box-shadow 0.2s;
+}
+
+.car-category-container:hover {
+  box-shadow: 0 8px 32px rgba(30, 34, 90, 0.16);
+}
+
+.category-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #283593;
+  margin-bottom: 18px;
+  border-bottom: 2px solid #e3e6f0;
+  padding-bottom: 7px;
+  letter-spacing: 0.5px;
+}
+
+.car-details-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.car-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 13px 0;
+  border-bottom: 1px solid #f1f3f6;
+  transition: background 0.15s;
+}
+
+.car-detail-item:last-child {
+  border-bottom: none;
+}
+
+.car-detail-label {
+  color: #616161;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+}
+
+.car-detail-value {
+  color: #1976d2;
+  font-weight: 600;
+  font-size: 1rem;
+  letter-spacing: 0.2px;
+}
+
+/* Add to App.css */
+.car-brands-container {
+  max-width: 700px;
+  margin: 32px auto 0 auto;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.85); /* semi-transparent white */
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(30, 34, 90, 0.07);
+  text-align: center;
+}
+
+.car-brands-toggle {
+  background: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 24px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-bottom: 16px;
+  transition: background 0.2s;
+}
+
+.car-brands-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.car-brand-item {
+  background: #e3e6f0;
+  color: #1a237e;
+  font-weight: 600;
+  padding: 8px 18px;
+  border-radius: 8px;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+}
+
+.sigin-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 36px 32px;
+  background: rgba(74, 0, 128, 0.92); /* dark violet, semi-transparent */
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(138, 43, 226, 0.2), 0 1.5px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  color: #f3eaff;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+
+.sigin-container:hover {
+  box-shadow: 0 12px 40px rgba(138, 43, 226, 0.28),
+    0 2px 12px rgba(0, 0, 0, 0.13);
+  background: rgba(111, 53, 160, 0.96);
+}
+
+.sigin-title {
+  text-align: center;
+  color: #1a237e;
+}
+
+.sigin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.sigin-input {
+  width: 100%;
+  padding: 8px;
+  margin-top: 4px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+.sigin-button {
+  background: #1a237e;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 0;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.25),
+    0 1.5px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.sigin-button:hover {
+  background: rgb(74, 0, 128);
+  color: #90caf9;
+  box-shadow: 0 8px 24px rgba(196, 113, 245, 0.28),
+    0 2px 12px rgba(0, 0, 0, 0.13);
+}
+
+.navbar-actions-box {
+  display: flex;
+  gap: 12px;
+  background: rgba(
+    74,
+    0,
+    128,
+    0.95
+  ); /* match dark violet nav, slightly transparent */
+  padding: 6px 18px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.18);
+  align-items: center;
+  margin-left: auto;
+  z-index: 2;
+}
+
+.navbar-action-btn {
+  color: #fff;
+  background: rgb(111, 53, 160); /* match nav glow step */
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 7px 18px;
+  border-radius: 6px;
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+  border: none;
+  outline: none;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.1);
+}
+
+.navbar-action-btn:hover {
+  background: rgb(74, 0, 128); /* dark violet */
+  color: #90caf9;
+  box-shadow: 0 4px 16px rgba(196, 113, 245, 0.18);
+}
+
+@media (max-width: 700px) {
+  .car-category-container {
+    padding: 16px 8px;
+    margin: 20px 4px;
+  }
+  h1 {
+    font-size: 1.5rem;
+  }
+  .category-title {
+    font-size: 1.05rem;
+  }
+}
+
+h1,
+h2,
+h3,
+.navbar-title,
+.navbar-home-link {
+  font-family: "Inter", "Roboto", Arial, sans-serif;
 }
