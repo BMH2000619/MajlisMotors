@@ -1,13 +1,14 @@
-import React, { useState } from "react"
-import Navbar from "../components/Navbar"
+import React, { useState } from 'react'
+import { SignInUser } from '../services/Auth'
 
 const Login = ({ setUser }) => {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault()
     setUser(email)
+    await SignInUser({ email, password })
     alert(`Logged in as: ${email}`)
   }
 
@@ -22,7 +23,7 @@ const Login = ({ setUser }) => {
               type="email"
               value={email}
               required
-              onChange={e => setEmail(e.target.value)}
+              onChange={(e) => setEmail(e.target.value)}
               className="sigin-input"
             />
           </label>
@@ -32,7 +33,7 @@ const Login = ({ setUser }) => {
               type="password"
               value={password}
               required
-              onChange={e => setPassword(e.target.value)}
+              onChange={(e) => setPassword(e.target.value)}
               className="sigin-input"
             />
           </label>
