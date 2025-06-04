@@ -47,9 +47,8 @@ const Navbar = () => {
           <Link to="/login" className="navbar-action-btn">
             Login
           </Link>
-          <Link to="/signout" className="navbar-action-btn">
-            Sign Out
-          </Link>
+          {/* Remove or comment out the Sign Out button below */}
+          {/* <button className="navbar-action-btn" onClick={handleSignOut}>Sign Out</button> */}
         </div>
       </div>
     </nav>
