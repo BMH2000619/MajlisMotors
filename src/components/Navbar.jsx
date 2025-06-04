@@ -1,6 +1,6 @@
 import React from "react"
 import { Link, useNavigate } from "react-router-dom"
-import profilePic from "../images/dodge.jpg" // Make sure this image exists
+import profilePic from "../images/dodge.jpg"
 
 const Navbar = () => {
   const navigate = useNavigate()
@@ -32,6 +32,9 @@ const Navbar = () => {
           />
           <Link to="/" className="navbar-home-link">
             Home
+          </Link>
+          <Link to="/about" className="navbar-about-link">
+            About
           </Link>
         </div>
         <div className="navbar-title-wrapper">

@@ -9,19 +9,28 @@ const Search = ({ onSearch }) => {
   }
 
   return (
-    <form className="search-form" onSubmit={handleSubmit} style={{ display: "flex", gap: 12, justifyContent: "center", margin: "24px 0" }}>
+    <form
+      className="search-form"
+      onSubmit={handleSubmit}
+      style={{
+        display: "flex",
+        gap: 12,
+        justifyContent: "center",
+        margin: "24px 0",
+      }}
+    >
       <input
         type="text"
         className="search-input"
         placeholder="Search cars by make, model, or year..."
         value={query}
-        onChange={e => setQuery(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         style={{
           padding: "10px 16px",
           borderRadius: 8,
           border: "1px solid #bbb",
           fontSize: "1rem",
-          minWidth: 220
+          minWidth: 220,
         }}
       />
       <button
@@ -35,7 +44,7 @@ const Search = ({ onSearch }) => {
           padding: "10px 24px",
           fontWeight: 600,
           fontSize: "1rem",
-          cursor: "pointer"
+          cursor: "pointer",
         }}
       >
         Search

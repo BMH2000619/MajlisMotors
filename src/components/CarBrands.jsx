@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-const CarBrands = ({ brands }) => {
+const CarBrands = ({ brands, onBrandClick }) => {
   const [open, setOpen] = useState(false)
 
   return (
@@ -15,7 +15,12 @@ const CarBrands = ({ brands }) => {
       {open && (
         <ul className="car-brands-list">
           {brands.map((brand, idx) => (
-            <li key={idx} className="car-brand-item">
+            <li
+              key={idx}
+              className="car-brand-item"
+              style={{ cursor: "pointer" }}
+              onClick={() => onBrandClick(brand)}
+            >
               {brand}
             </li>
           ))}

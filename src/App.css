@@ -351,6 +351,34 @@ h1 {
   box-shadow: 0 4px 16px rgba(196, 113, 245, 0.18);
 }
 
+/* Home & About container box styles */
+.navbar-left-links-box {
+  display: flex;
+  gap: 10px;
+  background: rgba(74, 0, 128, 0.92);
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.13);
+  padding: 4px 18px;
+  align-items: center;
+}
+
+.navbar-home-link,
+.navbar-about-link {
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  padding: 4px 10px;
+  border-radius: 5px;
+  transition: background 0.2s, color 0.2s;
+}
+
+.navbar-home-link:hover,
+.navbar-about-link:hover {
+  background: rgba(138, 43, 226, 0.18);
+  color: #90caf9;
+}
+
 @media (max-width: 700px) {
   .car-category-container {
     padding: 16px 8px;
