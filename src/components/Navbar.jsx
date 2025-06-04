@@ -33,6 +33,9 @@ const Navbar = () => {
           <Link to="/" className="navbar-home-link">
             Home
           </Link>
+          <Link to="/about" className="navbar-about-link">
+            About
+          </Link>
         </div>
         <div className="navbar-title-wrapper">
           <span className="navbar-title">Majlis Motors</span>

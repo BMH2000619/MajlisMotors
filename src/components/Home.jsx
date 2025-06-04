@@ -1,24 +1,27 @@
-import React from "react"
+import React, { useState } from "react"
 import CarBrands from "./CarBrands"
 import Search from "./Search"
+import CarCard from "./CarCard"
 import "./Home.css"
 
-const Home = ({ brands, onSearch }) => (
-  <>
-    <section className="home-hero">
-      <h1 className="home-title">Welcome to Majlis Motors</h1>
-      <p className="home-subtitle">
-        Discover the best car deals and detailed information about your favorite
-        vehicles.
-      </p>
-    </section>
-    <CarBrands brands={brands} />
-    <div
-      style={{ display: "flex", justifyContent: "center", margin: "32px 0" }}
-    >
-      <Search onSearch={onSearch} />
+const Home = ({ brands, cars, onSearch }) => {
+  const [selectedCar, setSelectedCar] = useState(null)
+
+  return (
+    <div className="main-container">
+      <div className="home-section">
+        <CarBrands brands={brands} onCarClick={(car) => setSelectedCar(car)} />
+        <div className="search-bar-container">
+          <Search onSearch={onSearch} />
+        </div>
+        {selectedCar && (
+          <div className="selected-car-container">
+            <CarCard car={selectedCar} />
+          </div>
+        )}
+      </div>
     </div>
-  </>
-)
+  )
+}
 
 export default Home

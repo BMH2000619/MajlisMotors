@@ -6,6 +6,7 @@ import CarList from "./components/CarList"
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import SignOut from "./pages/SignOut"
+import About from "./components/About"
 import "./App.css"
 import backgroundsound from "../public/assets/WhatsApp Video 2025-06-03 at 16.11.50.mp3"
 
@@ -85,6 +86,7 @@ const App = () => {
         <Route path="/signin" element={<Signup setUser={setUser} />} />
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/signout" element={<SignOut setUser={setUser} />} />
+        <Route path="/about" element={<About />} />
       </Routes>
     </Router>
   )
