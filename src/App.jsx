@@ -80,7 +80,7 @@ const App = () => {
         loop
       />
       <Routes>
-        <Route path="/" element={<Home brands={brands} />} />
+        <Route path="/" element={<Home brands={brands} cars={cars} />} />
         <Route path="/cars" element={<CarList cars={cars} />} />
         <Route path="/signin" element={<Signup setUser={setUser} />} />
         <Route path="/login" element={<Login setUser={setUser} />} />

@@ -254,10 +254,22 @@ h1 {
 .sigin-container {
   max-width: 400px;
   margin: 60px auto;
-  padding: 32px;
-  background: rgba(255, 255, 255, 0.85); /* semi-transparent white */
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(30, 34, 90, 0.13);
+  padding: 36px 32px;
+  background: rgba(74, 0, 128, 0.92); /* dark violet, semi-transparent */
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(138, 43, 226, 0.2), 0 1.5px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  backdrop-filter: blur(4px);
+  color: #f3eaff;
+  transition: box-shadow 0.2s, background 0.2s;
+}
+
+.sigin-container:hover {
+  box-shadow: 0 12px 40px rgba(138, 43, 226, 0.28),
+    0 2px 12px rgba(0, 0, 0, 0.13);
+  background: rgba(111, 53, 160, 0.96);
 }
 
 .sigin-title {
@@ -289,6 +301,16 @@ h1 {
   font-size: 1rem;
   cursor: pointer;
   margin-top: 10px;
+  box-shadow: 0 4px 16px rgba(138, 43, 226, 0.25),
+    0 1.5px 8px rgba(0, 0, 0, 0.1);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.sigin-button:hover {
+  background: rgb(74, 0, 128);
+  color: #90caf9;
+  box-shadow: 0 8px 24px rgba(196, 113, 245, 0.28),
+    0 2px 12px rgba(0, 0, 0, 0.13);
 }
 
 .navbar-actions-box {
