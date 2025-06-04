@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import profilePic from "../../public/images/dodge.jpg"
+import defaultProfilePic from "../../public/images/dodge.jpg"
 import "./Profile.css"
 
 const Profile = () => {
@@ -7,11 +7,23 @@ const Profile = () => {
   const [name, setName] = useState("John Doe")
   const [email, setEmail] = useState("johndoe@email.com")
   const [phone, setPhone] = useState("+1 234 567 890")
+  const [profilePic, setProfilePic] = useState(defaultProfilePic)
 
   const handleSave = (e) => {
     e.preventDefault()
     setEditing(false)
     // Optionally, save changes to backend here
+  }
+
+  const handlePicChange = (e) => {
+    const file = e.target.files[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onloadend = () => {
+        setProfilePic(reader.result)
+      }
+      reader.readAsDataURL(file)
+    }
   }
 
   return (
@@ -44,6 +56,15 @@ const Profile = () => {
               type="tel"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              className="profile-input"
+            />
+          </div>
+          <div className="profile-info">
+            <strong>Profile Picture:</strong>
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handlePicChange}
               className="profile-input"
             />
           </div>
