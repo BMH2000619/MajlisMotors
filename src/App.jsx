@@ -73,7 +73,7 @@ const App = () => {
     <Router>
       <Navbar />
       <audio
-        src="/assets/sound.mp3"
+        src="../../public/assets/sound.mp3"
         autoPlay
         loop
        

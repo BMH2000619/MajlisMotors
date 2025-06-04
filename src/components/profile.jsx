@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import profilePic from "../images/dodge.jpg"
+import profilePic from "../../public/images/dodge.jpg"
 import "./Profile.css"
 
 const Profile = () => {
