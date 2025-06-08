@@ -1,38 +1,46 @@
-import React, { useState } from "react"
-import CarBrands from "./CarBrands"
-import Search from "./Search"
-import CarList from "./CarList"
-import "./Home.css"
+import React, { useState, useEffect } from 'react'
+import CarBrands from './CarBrands'
+import Search from './Search'
+import CarList from './CarList'
+import './Home.css'
+import { GetCarsByBrand } from '../services/ShowCars' // Import your service
 
-const Home = ({ brands, cars }) => {
+const Home = ({ brands }) => {
   const [selectedBrand, setSelectedBrand] = useState(null)
+  const [cars, setCars] = useState([])
 
-  // Filter cars by selected brand
-  const filteredCars = selectedBrand
-    ? cars.filter((car) => car.make === selectedBrand)
-    : []
+  const handleBrandClick = async (brand) => {
+    setSelectedBrand(brand)
+    try {
+      const brandCars = await GetCarsByBrand(brand._id)
+      setCars(brandCars)
+    } catch (err) {
+      console.error('Failed to fetch cars:', err)
+      setCars([])
+    }
+  }
 
-  // When search is submitted, open YouTube search for the query
   const handleSearch = (query) => {
-    if (query && query.trim() !== "") {
+    if (query && query.trim() !== '') {
       const youtubeUrl = `https://www.youtube.com/results?search_query=${encodeURIComponent(
         query
       )}`
-      window.open(youtubeUrl, "_blank")
+      window.open(youtubeUrl, '_blank')
     }
   }
 
   return (
     <>
-      <CarBrands brands={brands} onBrandClick={setSelectedBrand} />
+      <CarBrands brands={brands} onBrandClick={handleBrandClick} />
       <div
-        style={{ display: "flex", justifyContent: "center", margin: "32px 0" }}
+        style={{ display: 'flex', justifyContent: 'center', margin: '32px 0' }}
       >
         <Search onSearch={handleSearch} />
       </div>
       {selectedBrand && (
         <div style={{ marginTop: 32 }}>
-          <CarList cars={filteredCars} />
+          <h2 style={{ textAlign: 'center' }}>Cars for {selectedBrand.name}</h2>
+          <CarList cars={cars} />
         </div>
       )}
     </>
