@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
 
 const CarBrands = ({ brands, onBrandClick }) => {
   const [open, setOpen] = useState(false)
@@ -10,18 +10,18 @@ const CarBrands = ({ brands, onBrandClick }) => {
         onClick={() => setOpen((prev) => !prev)}
         aria-expanded={open}
       >
-        {open ? "Hide Car Brands" : "Show Car Brands"}
+        {open ? 'Hide Car Brands' : 'Show Car Brands'}
       </button>
       {open && (
         <ul className="car-brands-list">
-          {brands.map((brand, idx) => (
+          {brands.map((brand) => (
             <li
-              key={idx}
+              key={brand._id}
               className="car-brand-item"
-              style={{ cursor: "pointer" }}
-              onClick={() => onBrandClick(brand)}
+              style={{ cursor: 'pointer' }}
+              onClick={() => onBrandClick(brand)} // Pass full object
             >
-              {brand}
+              {brand.name}
             </li>
           ))}
         </ul>
