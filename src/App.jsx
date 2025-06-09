@@ -6,7 +6,7 @@ import CarList from "./components/CarList"
 import Signup from "./pages/Signup"
 import Login from "./pages/Login"
 import SignOut from "./pages/SignOut"
-import Profile from "./components/profile" // Add this import
+import Profile from "./components/profile"
 import About from "./components/About"
 import "./App.css"
 
@@ -66,8 +66,15 @@ const cars = [
 const brands = ["Toyota", "Honda", "Nissan", "Audi", "Mercedes"]
 
 const App = () => {
-  // Demo: track if user is "signed in"
   const [user, setUser] = useState(null)
+
+  // Google Sign Up handler (demo, replace with real logic)
+  const handleGoogleSignUp = () => {
+    window.open(
+      "https://accounts.google.com/signin/oauth", // Replace with your OAuth endpoint
+      "_blank"
+    )
+  }
 
   return (
     <Router>
@@ -76,15 +83,19 @@ const App = () => {
         src="../../public/assets/sound.mp3"
         autoPlay
         loop
-       
       />
       <Routes>
         <Route path="/" element={<Home brands={brands} cars={cars} />} />
         <Route path="/cars" element={<CarList cars={cars} />} />
-        <Route path="/signin" element={<Signup setUser={setUser} />} />
+        <Route
+          path="/signin"
+          element={
+            <Signup setUser={setUser} onGoogleSignUp={handleGoogleSignUp} />
+          }
+        />
         <Route path="/login" element={<Login setUser={setUser} />} />
         <Route path="/signout" element={<SignOut setUser={setUser} />} />
-        <Route path="/profile" element={<Profile />} /> // Add this route
+        <Route path="/profile" element={<Profile />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>
