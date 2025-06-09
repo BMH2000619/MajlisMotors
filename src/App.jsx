@@ -20,46 +20,51 @@ const cars = [
     color: "White",
     mileage: "15,000 km",
     price: "$22,000",
+    image: "/images/ffff.jpg",
   },
   {
     make: "Honda",
-    model: "Civic",
-    year: 2021,
-    engine: "2.0L I4",
+    model: "Civic-type R",
+    year: 2024,
+    engine: "2.0L v4 turbo",
     transmission: "Manual",
     color: "Black",
     mileage: "20,000 km",
-    price: "$19,500",
+    price: "$25,500",
+    image: "/images/civic.jpg",
   },
   {
     make: "Nissan",
-    model: "Altima",
-    year: 2020,
-    engine: "2.5L I4",
-    transmission: "Automatic",
-    color: "Silver",
-    mileage: "25,000 km",
-    price: "$18,000",
+    model: "skyline",
+    year: 2000,
+    engine: "RB26 v6 twin turbo",
+    transmission: "Manual",
+    color: "blue",
+    mileage: "25,00 km",
+    price: "$55,000",
+    image: "/images/nissan.jpg",
   },
   {
     make: "Audi",
-    model: "A4",
+    model: "RS6",
     year: 2022,
-    engine: "2.0L Turbo",
+    engine: "v10 Turbo",
     transmission: "Automatic",
-    color: "Blue",
+    color: "black",
     mileage: "10,000 km",
-    price: "$35,000",
+    price: "$60,000",
+    image: "/images/audi.jpg",
   },
   {
     make: "Mercedes",
-    model: "C-Class",
-    year: 2023,
-    engine: "2.0L Turbo",
+    model: "C-63",
+    year: 2013,
+    engine: "6.3L Turbo",
     transmission: "Automatic",
-    color: "Gray",
+    color: "black",
     mileage: "5,000 km",
     price: "$42,000",
+    image: "/images/mercedes.jpg", // Add this line (place mercedes.jpg in public/images)
   },
 ]
 
@@ -79,11 +84,7 @@ const App = () => {
   return (
     <Router>
       <Navbar />
-      <audio
-        src="../../public/assets/sound.mp3"
-        autoPlay
-        loop
-      />
+      <audio src="../../public/assets/sound.mp3" autoPlay loop />
       <Routes>
         <Route path="/" element={<Home brands={brands} cars={cars} />} />
         <Route path="/cars" element={<CarList cars={cars} />} />

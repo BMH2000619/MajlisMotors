@@ -1,19 +1,22 @@
 import React, { useState } from "react"
 
 const CarCard = ({ car }) => {
+  const [flipped, setFlipped] = useState(false)
   const [favorite, setFavorite] = useState(false)
   const [rating, setRating] = useState(0)
-  const [flipped, setFlipped] = useState(false)
 
   return (
     <div
       className={`car-card-flip-container${flipped ? " flipped" : ""}`}
-      onClick={() => setFlipped((f) => !f)}
       tabIndex={0}
       aria-label="Flip car card"
       style={{ cursor: "pointer" }}
+      onClick={() => setFlipped((f) => !f)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") setFlipped((f) => !f)
+      }}
     >
-      {/* Front: Car Image and Basic Info */}
+      {/* Front Side */}
       <div className="car-card-flip car-card-front">
         <img src={car.image} alt={car.model} className="car-card-img" />
         <div className="car-card-title">
@@ -23,9 +26,24 @@ const CarCard = ({ car }) => {
           {car.make} {car.model}{" "}
           <span className="car-card-year">({car.year})</span>
         </div>
+        {/* Show price on the front of the card */}
+        {car.price && (
+          <div
+            className="car-card-price"
+            style={{
+              color: "#8a2be2",
+              fontWeight: 800,
+              fontSize: "1.18rem",
+              margin: "8px 0 0 0",
+              letterSpacing: "0.5px",
+            }}
+          >
+            {car.price}
+          </div>
+        )}
         <div className="car-card-flip-hint">Click to see details</div>
       </div>
-      {/* Back: Car Details */}
+      {/* Back Side */}
       <div className="car-card-flip car-card-back">
         <img src={car.image} alt={car.model} className="car-card-img" />
         <div

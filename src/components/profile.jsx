@@ -8,6 +8,8 @@ const Profile = () => {
   const [email, setEmail] = useState("johndoe@email.com")
   const [phone, setPhone] = useState("+1 234 567 890")
   const [profilePic, setProfilePic] = useState(defaultProfilePic)
+  const [comment, setComment] = useState("")
+  const [comments, setComments] = useState([])
 
   const handleSave = (e) => {
     e.preventDefault()
@@ -24,6 +26,13 @@ const Profile = () => {
       }
       reader.readAsDataURL(file)
     }
+  }
+
+  const handleCommentSubmit = (e) => {
+    e.preventDefault()
+    if (comment.trim() === "") return
+    setComments([...comments, comment])
+    setComment("")
   }
 
   return (
@@ -88,6 +97,30 @@ const Profile = () => {
           </button>
         </>
       )}
+
+      {/* Commit/Comment Section */}
+      <div className="profile-commit-section">
+        <h3 className="profile-commit-title">Leave a Comment</h3>
+        <form onSubmit={handleCommentSubmit} className="profile-commit-form">
+          <textarea
+            className="profile-commit-input"
+            placeholder="Write your comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            rows={3}
+          />
+          <button type="submit" className="profile-commit-btn">
+            Submit
+          </button>
+        </form>
+        <ul className="profile-commit-list">
+          {comments.map((c, idx) => (
+            <li key={idx} className="profile-commit-item">
+              {c}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }

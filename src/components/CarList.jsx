@@ -19,6 +19,17 @@ const CarList = ({ cars, onCarClick }) => (
             aria-label={`View details for ${car.make} ${car.model}`}
           >
             <CarCard car={car} />
+            <ul className="car-details-list">
+              {/* ...other details... */}
+              {car.price && (
+                <li className="car-detail-item">
+                  {/* <span className="car-detail-label">Price:</span> */}
+                  {/* <span className="car-detail-value car-detail-price">
+                    {car.price}
+                  </span> */}
+                </li>
+              )}
+            </ul>
           </div>
         ))
       ) : (
