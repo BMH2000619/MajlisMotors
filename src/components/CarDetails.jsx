@@ -40,8 +40,8 @@ const CarDetails = ({ car }) => {
   return (
     <section className="car-category-container" aria-label="Car Details">
       <h2 className="category-title" style={{ marginBottom: 24 }}>
-        {car.make} {car.model}{" "}
-        <span style={{ color: "#757575", fontWeight: 400 }}>({car.year})</span>
+        {car.make} {car.model}{' '}
+        <span style={{ color: '#757575', fontWeight: 400 }}>({car.year})</span>
       </h2>
       {categories.map(
         (cat, idx) =>
@@ -49,7 +49,7 @@ const CarDetails = ({ car }) => {
             <div key={idx} style={{ marginBottom: 20 }}>
               <h3
                 className="category-title"
-                style={{ fontSize: "1.1rem", marginBottom: 10 }}
+                style={{ fontSize: '1.1rem', marginBottom: 10 }}
               >
                 {cat.title}
               </h3>
@@ -66,6 +66,17 @@ const CarDetails = ({ car }) => {
               </ul>
             </div>
           )
+      )}
+      {car.description && (
+        <div style={{ marginBottom: 20 }}>
+          <h3
+            className="category-title"
+            style={{ fontSize: '1.1rem', marginBottom: 10 }}
+          >
+            Description
+          </h3>
+          <p style={{ lineHeight: '1.5' }}>{car.description}</p>
+        </div>
       )}
     </section>
   )
