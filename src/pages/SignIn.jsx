@@ -1,15 +1,23 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { SignInUser } from '../services/Auth'
 
-const Login = ({ setUser }) => {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
+const initialState = { email: '', password: '' }
+
+const SignIn = ({ setUser }) => {
+  const [formValues, setFormValues] = useState(initialState)
+  const navigate = useNavigate()
+
+  const handleChange = (e) => {
+    setFormValues({ ...formValues, [e.target.name]: e.target.value })
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    setUser(email)
-    await SignInUser({ email, password })
-    alert(`Logged in as: ${email}`)
+    const payload = await SignInUser(formValues) // payload must be the full user object
+    setFormValues(initialState)
+    setUser(payload)
+    navigate('/')
   }
 
   return (
@@ -21,9 +29,10 @@ const Login = ({ setUser }) => {
             Email:
             <input
               type="email"
-              value={email}
+              name="email"
+              value={formValues.email}
               required
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleChange}
               className="sigin-input"
             />
           </label>
@@ -31,9 +40,10 @@ const Login = ({ setUser }) => {
             Password:
             <input
               type="password"
-              value={password}
+              name="password"
+              value={formValues.password}
               required
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handleChange}
               className="sigin-input"
             />
           </label>
@@ -46,4 +56,4 @@ const Login = ({ setUser }) => {
   )
 }
 
-export default Login
+export default SignIn
