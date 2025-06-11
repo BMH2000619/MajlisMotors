@@ -65,41 +65,13 @@ const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
       {reviews.length ? (
         reviews.map((r, i) => (
           <div key={i} className="car-reviews-item">
-            <strong>{r.user_id?.name || 'Anonymous'}</strong>:{' '}
-            {editingId === r._id ? (
-              <form onSubmit={handleEditSubmit} style={{ display: 'inline' }}>
-                <input
-                  value={editComment}
-                  onChange={(e) => setEditComment(e.target.value)}
-                  required
-                  style={{ width: 200 }}
-                />
-                <input
-                  type="number"
-                  min="1"
-                  max="5"
-                  value={editRating}
-                  onChange={(e) => setEditRating(Number(e.target.value))}
-                  required
-                  style={{ width: 50, marginLeft: 8 }}
-                />
-                <button type="submit">Save</button>
-                <button type="button" onClick={() => setEditingId(null)}>
-                  Cancel
-                </button>
-              </form>
-            ) : (
-              <>
-                {r.comment} (⭐{r.rating})
-                {user && r.user_id && r.user_id._id === user.id && (
-                  <>
-                    {' '}
-                    <button onClick={() => startEdit(r)}>Edit</button>
-                    <button onClick={() => handleDelete(r._id)}>Delete</button>
-                  </>
-                )}
-              </>
-            )}
+            <strong>
+              {r.user_id?.firstName && r.user_id?.lastName
+                ? `${r.user_id.firstName} ${r.user_id.lastName}`
+                : r.user_id?.username || 'Anonymous'}
+            </strong>
+            : {r.comment} (⭐
+            {r.rating})
           </div>
         ))
       ) : (
