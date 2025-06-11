@@ -1,24 +1,18 @@
-import React from "react"
-import CarCard from "./CarCard"
+import React from 'react'
+import CarCard from './CarCard'
 
-const CarList = ({ cars, onCarClick }) => (
+const CarList = ({ cars, user }) => (
   <section className="car-list-section">
     <h2 className="car-list-title">Available Cars</h2>
     <div className="car-list-grid">
       {cars && cars.length > 0 ? (
-        cars.map((car, idx) => (
+        cars.map((car) => (
           <div
-            key={car.id || idx}
+            key={car._id} // MongoDB _id is correct key
             className="car-list-card-wrapper"
-            onClick={() => onCarClick && onCarClick(car)}
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (onCarClick && (e.key === "Enter" || e.key === " "))
-                onCarClick(car)
-            }}
             aria-label={`View details for ${car.make} ${car.model}`}
           >
-            <CarCard car={car} />
+            <CarCard car={car} user={user} />
           </div>
         ))
       ) : (

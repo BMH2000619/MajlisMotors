@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const Client = axios.create({ baseURL: 'http://localhost:3001/api' })
+const Client = axios.create({ baseURL: 'http://localhost:3001/' })
 
 Client.interceptors.request.use(
   async (config) => {

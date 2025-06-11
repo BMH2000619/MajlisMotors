@@ -1,33 +1,28 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
+import CarReviews from './CarReviews'
+import ReviewForm from './ReviewForm'
 
-const fallbackImg = "/images/ffff.jpg"
+const fallbackImg = '/images/ffff.jpg'
 
 const carImages = {
-  Toyota: "/images/ffff.jpg",
-  Honda: "/images/honda.jpg",
-  Nissan: "/images/nissan.jpg",
-  Audi: "/images/audi.jpg",
-  Mercedes: "/images/mercedes.jpg",
+  // Toyota: '/images/ffff.jpg',
+  // Honda: '/images/honda.jpg',
+  // Nissan: '/images/nissan.jpg',
+  // Audi: '/images/audi.jpg',
+  // Mercedes: '/images/mercedes.jpg'
 }
 
-const CarCard = ({ car }) => {
+const CarCard = ({ car, user }) => {
   const [flipped, setFlipped] = useState(false)
-  const [rating, setRating] = useState(0)
-  const [review, setReview] = useState("")
-  const [favorite, setFavorite] = useState(false)
-  const [showReviewInput, setShowReviewInput] = useState(false)
+  const [refreshReviews, setRefreshReviews] = useState(false)
+
   const carImg = car.image || carImages[car.make] || fallbackImg
 
-  const handleStarClick = (star) => setRating(star)
-  const handleFavorite = () => setFavorite((f) => !f)
-  const handleReviewSubmit = (e) => {
-    e.preventDefault()
-    setShowReviewInput(false)
-  }
+  const triggerRefresh = () => setRefreshReviews((prev) => !prev)
 
   return (
     <div
-      className={`car-card-flip-container${flipped ? " flipped" : ""}`}
+      className={`car-card-flip-container${flipped ? ' flipped' : ''}`}
       onClick={() => setFlipped((f) => !f)}
       tabIndex={0}
       aria-label="Flip car card"
@@ -40,88 +35,27 @@ const CarCard = ({ car }) => {
           className="car-card-img"
         />
         <div className="car-card-title">
-          <span role="img" aria-label="car" className="car-card-emoji">
-            🚗
-          </span>
-          {car.make} {car.model}{" "}
+          🚗 {car.make} {car.model}{' '}
           <span className="car-card-year">({car.year})</span>
         </div>
-        <div className="car-card-actions">
-          {/* Rating */}
-          <div className="car-card-rating">
-            {[1, 2, 3, 4, 5].map((star) => (
-              <span
-                key={star}
-                className={`car-card-star${star <= rating ? " active" : ""}`}
-                onClick={(e) => {
-                  e.stopPropagation()
-                  handleStarClick(star)
-                }}
-                role="button"
-                aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
-              >
-                ★
-              </span>
-            ))}
-          </div>
-          {/* Favorite */}
-          <span
-            className={`car-card-favorite${favorite ? " active" : ""}`}
-            onClick={(e) => {
-              e.stopPropagation()
-              handleFavorite()
-            }}
-            role="button"
-            aria-label={favorite ? "Remove from favorites" : "Add to favorites"}
-            title={favorite ? "Remove from favorites" : "Add to favorites"}
-          >
-            ♥
-          </span>
+
+        <div style={{ marginTop: '10px' }}>
+          <CarReviews carId={car._id} refresh={refreshReviews} />
         </div>
-        {/* Review */}
-        <div className="car-card-review">
-          {review && (
-            <div className="car-card-review-text">
-              <b>Review:</b> {review}
-            </div>
-          )}
-          {showReviewInput ? (
-            <form
-              onSubmit={(e) => {
-                handleReviewSubmit(e)
-                e.stopPropagation()
-              }}
-              className="car-card-review-form"
-            >
-              <input
-                type="text"
-                value={review}
-                onChange={(e) => setReview(e.target.value)}
-                placeholder="Write a review..."
-                className="car-card-review-input"
-                onClick={(e) => e.stopPropagation()}
-              />
-              <button
-                type="submit"
-                className="car-card-review-save"
-                onClick={(e) => e.stopPropagation()}
-              >
-                Save
-              </button>
-            </form>
-          ) : (
-            <button
-              className="car-card-review-edit"
-              onClick={(e) => {
-                e.stopPropagation()
-                setShowReviewInput(true)
-              }}
-            >
-              {review ? "Edit Review" : "Add Review"}
-            </button>
-          )}
-        </div>
+
+        {user ? (
+          <ReviewForm
+            carId={car._id}
+            token={user.token}
+            onReviewPosted={triggerRefresh}
+          />
+        ) : (
+          <p style={{ fontSize: '0.9rem', marginTop: '10px' }}>
+            <a href="/signin">Sign in</a> to write a review.
+          </p>
+        )}
       </div>
+
       {/* Back: Car Details */}
       <div className="car-card-flip car-card-back">
         <img
@@ -131,10 +65,7 @@ const CarCard = ({ car }) => {
           style={{ marginBottom: 12 }}
         />
         <div className="car-card-title">
-          <span role="img" aria-label="car" className="car-card-emoji">
-            🚗
-          </span>
-          {car.make} {car.model}{" "}
+          🚗 {car.make} {car.model}{' '}
           <span className="car-card-year">({car.year})</span>
         </div>
         <ul className="car-details-list">
