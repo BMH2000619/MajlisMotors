@@ -1,17 +1,36 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams, useNavigate } from 'react-router-dom'
 import CarReviews from './CarReviews'
 import ReviewForm from './ReviewForm'
+import Client from '../services/api' // Axios instance
 
-const CarDetails = ({ car, user }) => {
+const CarDetails = ({ user }) => {
+  const { carId } = useParams()
+  const navigate = useNavigate()
+  const [car, setCar] = useState(null)
+  const [loading, setLoading] = useState(true)
   const [refreshReviews, setRefreshReviews] = useState(false)
 
+  useEffect(() => {
+    const fetchCar = async () => {
+      try {
+        const res = await Client.get(`/cars/${carId}`)
+        setCar(res.data)
+      } catch (err) {
+        setCar(null)
+      } finally {
+        setLoading(false)
+      }
+    }
+    fetchCar()
+  }, [carId])
+
+  if (loading) return <div>Loading car details...</div>
   if (!car)
     return (
       <div className="car-category-container">
         <div className="category-title">Car Details</div>
-        <p style={{ color: '#757575', textAlign: 'center' }}>
-          No car selected.
-        </p>
+        <p style={{ color: '#757575', textAlign: 'center' }}>Car not found.</p>
       </div>
     )
 
@@ -19,32 +38,27 @@ const CarDetails = ({ car, user }) => {
 
   return (
     <section className="car-category-container" aria-label="Car Details">
+      <button onClick={() => navigate(-1)} className="back-btn">
+        ← Back
+      </button>
       <h2 className="category-title" style={{ marginBottom: 24 }}>
-        {car.make} {car.model}{' '}
+        {car.name}{' '}
         <span style={{ color: '#757575', fontWeight: 400 }}>({car.year})</span>
       </h2>
-      <ul className="car-details-list">
-        <li className="car-detail-item">
-          <span className="car-detail-label">Engine:</span>
-          <span className="car-detail-value">{car.engine}</span>
-        </li>
-        <li className="car-detail-item">
-          <span className="car-detail-label">Transmission:</span>
-          <span className="car-detail-value">{car.transmission}</span>
-        </li>
-        <li className="car-detail-item">
-          <span className="car-detail-label">Color:</span>
-          <span className="car-detail-value">{car.color}</span>
-        </li>
-        <li className="car-detail-item">
-          <span className="car-detail-label">Mileage:</span>
-          <span className="car-detail-value">{car.mileage}</span>
-        </li>
-        <li className="car-detail-item">
-          <span className="car-detail-label">Price:</span>
-          <span className="car-detail-value">{car.price}</span>
-        </li>
-      </ul>
+      <div className="car-details-card">
+        <img src={car.image} alt={car.name} className="car-details-img" />
+        <div className="car-details-info">
+          <p>
+            <strong>Type:</strong> {car.type}
+          </p>
+          <p>
+            <strong>Description:</strong> {car.description}
+          </p>
+          <p>
+            <strong>Year:</strong> {car.year}
+          </p>
+        </div>
+      </div>
 
       <CarReviews carId={car._id} refresh={refreshReviews} />
 

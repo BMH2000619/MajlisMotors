@@ -9,6 +9,7 @@ import SignOut from './pages/SignOut'
 import Profile from './components/profile'
 import About from './components/About'
 import './App.css'
+import CarDetails from './components/CarDetails'
 
 import { GetBrands } from './services/ShowBrands'
 import { GetCars } from './services/ShowCars'
@@ -141,6 +142,7 @@ const App = () => {
           element={<Profile user={user} setUser={setUser} />}
         />
         <Route path="/about" element={<About />} />
+        <Route path="/cars/:carId" element={<CarDetails />} />
       </Routes>
     </Router>
   )
