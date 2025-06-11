@@ -1,22 +1,21 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import defaultProfilePic from '../../public/images/dodge.jpg'
 import './profile.css'
 
 const Profile = ({ user }) => {
   const [editing, setEditing] = useState(false)
   const [name, setName] = useState('')
+  const [nickname, setNickname] = useState('')
   const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [profilePic, setProfilePic] = useState(
     user?.profileImage || defaultProfilePic
   )
 
-  // Comment-related state
-  const [comment, setComment] = useState('')
-  const [comments, setComments] = useState([])
-
   const handleEdit = () => {
-    setName(user.name || user.username || '')
+    setName(user.name || '')
+    setNickname(user.nickname || '')
     setEmail(user.email || '')
     setPhone(user.phone || '')
     setProfilePic(user.profileImage || defaultProfilePic)
@@ -25,8 +24,8 @@ const Profile = ({ user }) => {
 
   const handleSave = (e) => {
     e.preventDefault()
+    // Here you would send updated data to backend if needed
     setEditing(false)
-    // Optionally, send updated data to backend
   }
 
   const handlePicChange = (e) => {
@@ -37,14 +36,6 @@ const Profile = ({ user }) => {
         setProfilePic(reader.result)
       }
       reader.readAsDataURL(file)
-    }
-  }
-
-  const handleCommentSubmit = (e) => {
-    e.preventDefault()
-    if (comment.trim()) {
-      setComments([...comments, comment.trim()])
-      setComment('')
     }
   }
 
@@ -70,6 +61,15 @@ const Profile = ({ user }) => {
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="profile-input"
+            />
+          </div>
+          <div className="profile-info">
+            <strong>Nickname:</strong>
+            <input
+              type="text"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
               className="profile-input"
             />
           </div>
@@ -107,7 +107,10 @@ const Profile = ({ user }) => {
       ) : (
         <>
           <div className="profile-info">
-            <strong>Name:</strong> {user.name || user.username}
+            <strong>Name:</strong> {user.name || ''}
+          </div>
+          <div className="profile-info">
+            <strong>Nickname:</strong> {user.nickname || ''}
           </div>
           <div className="profile-info">
             <strong>Email:</strong> {user.email}
@@ -121,29 +124,22 @@ const Profile = ({ user }) => {
         </>
       )}
 
-      {/* Comment Section */}
-      <div className="profile-commit-section">
-        <h3 className="profile-commit-title">Leave a Comment</h3>
-        <form onSubmit={handleCommentSubmit} className="profile-commit-form">
-          <textarea
-            className="profile-commit-input"
-            placeholder="Write your comment..."
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            rows={3}
-          />
-          <button type="submit" className="profile-commit-btn">
-            Submit
-          </button>
-        </form>
-        <ul className="profile-commit-list">
-          {comments.map((c, idx) => (
-            <li key={idx} className="profile-commit-item">
-              {c}
-            </li>
-          ))}
-        </ul>
-      </div>
+     
+      {/* <nav className="navbar">
+        <ul className="navbar-links">
+          ...other links...
+          <li>
+            <Link to="/profile" className="navbar-link navbar-profile-link">
+              <img
+                src={user?.profileImage || '/images/dodge.jpg'}
+                alt="Profile"
+                className="navbar-profile-pic"
+              />
+             
+             </Link> 
+         </li>
+         </ul>
+       </nav> */}
     </div>
   )
 }

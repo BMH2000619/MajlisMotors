@@ -8,7 +8,7 @@ body {
       rgba(244, 246, 251, 0.5),
       rgba(227, 230, 240, 0.5)
     ),
-    url("./images/1969.jpg") no-repeat center center fixed;
+    url("./images/fpf.webp") no-repeat center center fixed;
   background-size: cover;
 }
 main.App {
@@ -72,6 +72,7 @@ h1 {
   display: flex;
   align-items: center;
   z-index: 2;
+  gap: 10px;
 }
 .navbar-title-wrapper {
   position: absolute;
@@ -610,7 +611,7 @@ h1 {
 }
 
 /* --- Google Signup Button --- */
-.google-signup-btn {
+/* .google-signup-btn {
   background: #fff;
   color: #4a0080;
   border: 2px solid #8a2be2;
@@ -655,7 +656,7 @@ h1 {
   background: #4a0080;
   color: #ffd54f;
   border-color: #8a2be2;
-}
+} */
 
 /* --- Error Message --- */
 .sigin-container .error-message,
@@ -688,4 +689,118 @@ h1 {
     justify-content: center;
     padding: 12px 0;
   }
+}
+
+/* Add to your App.css or CarCard CSS section */
+.car-card-jump-btn {
+  margin: 10px auto 0 auto;
+  display: block;
+  background: linear-gradient(90deg, #8a2be2 60%, #4a0080 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(74,0,128,0.13);
+  transition: background 0.18s, color 0.18s;
+  letter-spacing: 0.5px;
+}
+.car-card-jump-btn:hover,
+.car-card-jump-btn:focus {
+  background: linear-gradient(90deg, #4a0080 60%, #8a2be2 100%);
+  color: #ffd54f;
+}
+.car-reviews-container {
+  margin-top: 20px;
+}
+.car-reviews-form {
+  margin-bottom: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.car-reviews-rating-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.car-reviews-rating-label {
+  font-weight: 600;
+  color: #8a2be2;
+}
+.car-reviews-star {
+  cursor: pointer;
+  color: #8a2be2;
+  font-size: 1.3rem;
+  transition: color 0.2s;
+}
+.car-reviews-star.active,
+.car-reviews-star:hover {
+  color: #ffd54f;
+}
+.car-reviews-textarea {
+  width: 100%;
+  border-radius: 8px;
+  border: 1.5px solid #8a2be2;
+  padding: 7px 12px;
+  font-size: 1rem;
+  resize: vertical;
+  background: rgba(255,255,255,0.13);
+  color: #4a0080;
+  font-weight: 500;
+}
+.car-reviews-submit-btn {
+  background: linear-gradient(90deg, #8a2be2 60%, #4a0080 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 18px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(74,0,128,0.13);
+  transition: background 0.18s, color 0.18s;
+  align-self: flex-end;
+}
+.car-reviews-submit-btn:hover,
+.car-reviews-submit-btn:focus {
+  background: linear-gradient(90deg, #4a0080 60%, #8a2be2 100%);
+  color: #ffd54f;
+}
+.car-reviews-item {
+  margin-bottom: 10px;
+}
+/* Navbar Layout */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Profile link in navbar */
+.navbar-profile-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+/* Profile picture in navbar */
+.navbar-profile-pic {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #fff;
+}
+
+/* Optional: Profile name styling */
+.navbar-profile-link span {
+  color: #fff;
+  font-weight: 600;
+  font-size: 1.08rem;
+  letter-spacing: 0.5px;
 }

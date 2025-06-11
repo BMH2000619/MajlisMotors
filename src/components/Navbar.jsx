@@ -19,31 +19,17 @@ const Navbar = ({ user, setUser }) => {
   return (
     <nav className="navbar">
       <div className="navbar-content">
-        <div
-          className="navbar-left"
-          style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
-        >
+        <div className="navbar-left">
           {user && (
             <div
-              style={{
-                display: 'flex',
-                alignItems: 'center',
-                gap: '8px',
-                cursor: 'pointer'
-              }}
+              className="navbar-profile-link"
               onClick={handleProfileClick}
+              style={{ cursor: 'pointer' }}
             >
               <img
                 src={user.profileImage || profilePic}
                 alt="Profile"
                 className="navbar-profile-pic"
-                style={{
-                  width: '36px',
-                  height: '36px',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: '2px solid #fff'
-                }}
               />
               <span>{user.name || user.username || 'Profile'}</span>
             </div>
@@ -56,18 +42,7 @@ const Navbar = ({ user, setUser }) => {
           </Link>
         </div>
         <div className="navbar-title-wrapper">
-          <span
-            className="navbar-title"
-            style={{
-              fontWeight: 800,
-              fontSize: '1.4rem',
-              letterSpacing: '1.5px',
-              color: '#fff',
-              textShadow: '0 2px 8px #4a0080'
-            }}
-          >
-            Majlis Motors
-          </span>
+          <span className="navbar-title">Majlis Motors</span>
         </div>
         <div className="navbar-actions-box">
           {user ? (
