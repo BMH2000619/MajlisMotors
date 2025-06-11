@@ -11,7 +11,10 @@ const Profile = ({ user }) => {
     user?.profileImage || defaultProfilePic
   )
 
-  // When entering edit mode, initialize fields from user
+  // Comment-related state
+  const [comment, setComment] = useState('')
+  const [comments, setComments] = useState([])
+
   const handleEdit = () => {
     setName(user.name || user.username || '')
     setEmail(user.email || '')
@@ -23,7 +26,7 @@ const Profile = ({ user }) => {
   const handleSave = (e) => {
     e.preventDefault()
     setEditing(false)
-    // Optionally, save changes to backend here
+    // Optionally, send updated data to backend
   }
 
   const handlePicChange = (e) => {
@@ -37,6 +40,13 @@ const Profile = ({ user }) => {
     }
   }
 
+  const handleCommentSubmit = (e) => {
+    e.preventDefault()
+    if (comment.trim()) {
+      setComments([...comments, comment.trim()])
+      setComment('')
+    }
+  }
 
   if (!user) {
     return <div>Please sign in to view your profile.</div>
@@ -51,6 +61,7 @@ const Profile = ({ user }) => {
       />
       <h2>{user.name || user.username}</h2>
       <p>Email: {user.email}</p>
+
       {editing ? (
         <form onSubmit={handleSave} className="profile-edit-form">
           <div className="profile-info">
@@ -110,7 +121,7 @@ const Profile = ({ user }) => {
         </>
       )}
 
-      {/* Commit/Comment Section */}
+      {/* Comment Section */}
       <div className="profile-commit-section">
         <h3 className="profile-commit-title">Leave a Comment</h3>
         <form onSubmit={handleCommentSubmit} className="profile-commit-form">
