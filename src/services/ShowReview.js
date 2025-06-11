@@ -1,24 +1,20 @@
 import Client from './api'
 
+// Example - should return an array
 export const GetReviewsByCarId = async (carId) => {
-  try {
-    const res = await Client.get(`/cars/${carId}/reviews`)
-    return res.data
-  } catch (error) {
-    throw error
-  }
+  const res = await Client.get(`/reviews/car/${carId}`)
+  return res.data // should be the array directly
 }
 
-export const PostReview = async (data, token) => {
-  try {
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`
-      }
-    }
-    const res = await Client.post(`/reviews`, data, config)
-    return res.data
-  } catch (error) {
-    throw error
-  }
+
+// /services/ShowReview.js
+export const PostReview = async (carId, comment, rating) => {
+  const res = await Client.post('/reviews', {
+    car_id: carId,
+    comment: comment, // must match backend
+    rating
+  })
+  return res.data
 }
+
+

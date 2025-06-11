@@ -54,7 +54,7 @@ const CarDetails = ({ user }) => {
       >
         <img
           src={car.image}
-          alt="Corolla"
+          alt={car.name}
           className="car-details-img"
           style={{ display: 'block', margin: '0 auto' }}
         />
