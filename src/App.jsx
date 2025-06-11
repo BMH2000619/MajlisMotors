@@ -11,14 +11,13 @@ import About from './components/About'
 import './App.css'
 
 import { GetBrands } from './services/ShowBrands'
-
-import { GetCars } from './services/ShowCars' // You already have this service!
+import { GetCars } from './services/ShowCars'
 import { CheckSession } from './services/Auth'
 
 const App = () => {
   const [user, setUser] = useState(null)
   const [brands, setBrands] = useState([])
-  const [cars, setCars] = useState([]) // NEW - we will load cars
+  const [cars, setCars] = useState([])
 
   // Load brands
   useEffect(() => {
@@ -33,7 +32,6 @@ const App = () => {
     fetchBrands()
   }, [])
 
-
   // Load cars
   useEffect(() => {
     const fetchCars = async () => {
@@ -44,46 +42,31 @@ const App = () => {
         console.error('Failed to fetch cars:', err)
       }
     }
-
     fetchCars()
   }, [])
 
-  // Check session on load
+  // Check session
   useEffect(() => {
+    const token = localStorage.getItem('token')
     const checkUserSession = async () => {
       try {
         const sessionData = await CheckSession()
-        setUser(sessionData.user) // Assuming your /auth/session returns { user: ... }
+        setUser(sessionData.user) // Adjust if CheckSession returns just user
       } catch (err) {
         console.log('No valid session')
         setUser(null)
       }
     }
-  }, [])
 
-useEffect(() => {
-    const token = localStorage.getItem('token')
-    const checkToken = async () => {
-      try {
-        const user = await CheckSession()
-        setUser(user)
-      } catch (err) {
-        setUser(null)
-      }
-    }
     if (token) {
-      checkToken()
+      checkUserSession()
     } else {
       setUser(null)
     }
-    checkUserSession()
-
-
   }, [])
 
   return (
     <Router>
-
       <Navbar user={user} setUser={setUser} />
       <audio src="../../public/assets/sound.mp3" autoPlay loop />
       <Routes>
@@ -96,7 +79,6 @@ useEffect(() => {
           path="/profile"
           element={<Profile user={user} setUser={setUser} />}
         />
-
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>

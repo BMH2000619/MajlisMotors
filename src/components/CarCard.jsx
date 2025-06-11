@@ -51,7 +51,7 @@ const CarCard = ({ car, user }) => {
           />
         ) : (
           <p style={{ fontSize: '0.9rem', marginTop: '10px' }}>
-            <a href="/login">Sign in</a> to write a review.
+            <a href="/signin">Sign in</a> to write a review.
           </p>
         )}
       </div>
