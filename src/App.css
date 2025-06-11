@@ -9,6 +9,7 @@ body {
       rgba(227, 230, 240, 0.5)
     ),
     url("../public/images/fpf.webp") no-repeat center center fixed;
+
   background-size: cover;
 }
 main.App {
