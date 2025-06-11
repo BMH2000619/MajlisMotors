@@ -1,74 +1,39 @@
 import React, { useEffect, useState } from 'react'
-import axios from 'axios'
+import { GetReviewsByCarId } from '../services/ShowReview'
 
-const CarReviews = ({ carId, currentUserId, token }) => {
+const CarReviews = ({ carId, refresh }) => {
   const [reviews, setReviews] = useState([])
-  const [loading, setLoading] = useState(true)
-
-  const fetchReviews = async () => {
-    try {
-      const res = await axios.get(`/api/reviews/car/${carId}`)
-      setReviews(res.data)
-    } catch (err) {
-      console.error('Error fetching reviews', err)
-    } finally {
-      setLoading(false)
-    }
-  }
 
   useEffect(() => {
+    const fetchReviews = async () => {
+      try {
+        const data = await GetReviewsByCarId(carId)
+        setReviews(data.reviews || []) // ✅ SAFE: use reviews array or empty
+      } catch (err) {
+        console.error('Failed to load reviews:', err)
+        setReviews([]) // fallback if error
+      }
+    }
+
     if (carId) {
       fetchReviews()
     }
-  }, [carId])
-
-  const handleDelete = async (reviewId) => {
-    try {
-      await axios.delete(`/api/reviews/${reviewId}`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
-      fetchReviews() // reload reviews
-    } catch (err) {
-      console.error('Error deleting review', err)
-    }
-  }
-
-  if (loading) return <p>Loading reviews...</p>
+  }, [carId, refresh])
 
   return (
-    <section className="car-category-container" aria-label="Car Reviews">
-      <h2 className="category-title">Reviews</h2>
-      {reviews.length === 0 ? (
-        <p>No reviews yet. Be the first to review!</p>
+    <div style={{ marginTop: '20px' }}>
+      <h3>Reviews</h3>
+      {reviews.length ? (
+        reviews.map((r, i) => (
+          <div key={i} style={{ marginBottom: '10px' }}>
+            <strong>{r.user?.username || 'Anonymous'}</strong>: {r.comment} (⭐
+            {r.rating})
+          </div>
+        ))
       ) : (
-        <ul className="car-details-list">
-          {reviews.map((review) => (
-            <li key={review._id} className="car-detail-item">
-              <div>
-                <strong>{review.user_id?.name}</strong> rated{' '}
-                <b>{review.rating}/10</b>
-              </div>
-              <p style={{ margin: '6px 0' }}>{review.content}</p>
-              {review.user_id?._id === currentUserId && (
-                <button
-                  onClick={() => handleDelete(review._id)}
-                  style={{
-                    background: '#ff4d4f',
-                    color: 'white',
-                    border: 'none',
-                    padding: '4px 8px',
-                    cursor: 'pointer',
-                    borderRadius: 4
-                  }}
-                >
-                  Delete My Review
-                </button>
-              )}
-            </li>
-          ))}
-        </ul>
+        <p>No reviews yet.</p>
       )}
-    </section>
+    </div>
   )
 }
 

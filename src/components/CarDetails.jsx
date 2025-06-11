@@ -1,41 +1,21 @@
-import React from "react"
+import React, { useState } from 'react'
+import CarReviews from './CarReviews'
+import ReviewForm from './ReviewForm'
 
-const CarDetails = ({ car }) => {
+const CarDetails = ({ car, user }) => {
+  const [refreshReviews, setRefreshReviews] = useState(false)
+
   if (!car)
     return (
       <div className="car-category-container">
         <div className="category-title">Car Details</div>
-        <p style={{ color: "#757575", textAlign: "center" }}>
+        <p style={{ color: '#757575', textAlign: 'center' }}>
           No car selected.
         </p>
       </div>
     )
 
-  const categories = [
-    {
-      title: "Basic Info",
-      details: [
-        { label: "Make", value: car.make },
-        { label: "Model", value: car.model },
-        { label: "Year", value: car.year },
-      ],
-    },
-    {
-      title: "Specifications",
-      details: [
-        { label: "Engine", value: car.engine },
-        { label: "Transmission", value: car.transmission },
-        { label: "Color", value: car.color },
-      ],
-    },
-    {
-      title: "Other Details",
-      details: [
-        { label: "Mileage", value: car.mileage },
-        { label: "Price", value: car.price },
-      ],
-    },
-  ]
+  const triggerRefresh = () => setRefreshReviews((prev) => !prev)
 
   return (
     <section className="car-category-container" aria-label="Car Details">
@@ -43,40 +23,41 @@ const CarDetails = ({ car }) => {
         {car.make} {car.model}{' '}
         <span style={{ color: '#757575', fontWeight: 400 }}>({car.year})</span>
       </h2>
-      {categories.map(
-        (cat, idx) =>
-          cat.details.some((d) => d.value) && (
-            <div key={idx} style={{ marginBottom: 20 }}>
-              <h3
-                className="category-title"
-                style={{ fontSize: '1.1rem', marginBottom: 10 }}
-              >
-                {cat.title}
-              </h3>
-              <ul className="car-details-list">
-                {cat.details.map(
-                  (detail, i) =>
-                    detail.value && (
-                      <li className="car-detail-item" key={i}>
-                        <span className="car-detail-label">{detail.label}</span>
-                        <span className="car-detail-value">{detail.value}</span>
-                      </li>
-                    )
-                )}
-              </ul>
-            </div>
-          )
-      )}
-      {car.description && (
-        <div style={{ marginBottom: 20 }}>
-          <h3
-            className="category-title"
-            style={{ fontSize: '1.1rem', marginBottom: 10 }}
-          >
-            Description
-          </h3>
-          <p style={{ lineHeight: '1.5' }}>{car.description}</p>
-        </div>
+      <ul className="car-details-list">
+        <li className="car-detail-item">
+          <span className="car-detail-label">Engine:</span>
+          <span className="car-detail-value">{car.engine}</span>
+        </li>
+        <li className="car-detail-item">
+          <span className="car-detail-label">Transmission:</span>
+          <span className="car-detail-value">{car.transmission}</span>
+        </li>
+        <li className="car-detail-item">
+          <span className="car-detail-label">Color:</span>
+          <span className="car-detail-value">{car.color}</span>
+        </li>
+        <li className="car-detail-item">
+          <span className="car-detail-label">Mileage:</span>
+          <span className="car-detail-value">{car.mileage}</span>
+        </li>
+        <li className="car-detail-item">
+          <span className="car-detail-label">Price:</span>
+          <span className="car-detail-value">{car.price}</span>
+        </li>
+      </ul>
+
+      <CarReviews carId={car._id} refresh={refreshReviews} />
+
+      {user ? (
+        <ReviewForm
+          carId={car._id}
+          token={user.token}
+          onReviewPosted={triggerRefresh}
+        />
+      ) : (
+        <p>
+          <a href="/login">Sign in</a> to write a review.
+        </p>
       )}
     </section>
   )

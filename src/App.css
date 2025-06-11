@@ -421,6 +421,10 @@ h1 {
   }
 }
 /* --- Car List Section --- */
+.car-card-img {
+  width: 320px;
+  height: 150px;
+}
 .car-list-section {
   margin: 0 auto 32px auto;
   max-width: 1200px;

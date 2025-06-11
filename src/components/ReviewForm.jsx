@@ -1,58 +1,46 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { PostReview } from '../services/ShowReview'
 
 const ReviewForm = ({ carId, token, onReviewPosted }) => {
-  const [content, setContent] = useState('')
-  const [rating, setRating] = useState(5)
+  const [comment, setComment] = useState('')
+  const [rating, setRating] = useState(0)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try {
-      await axios.post(
-        '/api/reviews',
-        { content, rating, car_id: carId },
-        { headers: { Authorization: `Bearer ${token}` } }
-      )
-      setContent('')
-      setRating(5)
-      onReviewPosted() // callback to refresh reviews
+      await PostReview({ carId, comment, rating }, token)
+      setComment('')
+      setRating(0)
+      onReviewPosted()
     } catch (err) {
-      console.error('Error posting review', err)
+      console.error('Failed to post review:', err)
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: 20 }}>
-      <h3 className="category-title">Write a Review</h3>
+    <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
+      <h4>Write a Review</h4>
       <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder="Your review..."
-        style={{ width: '100%', height: '80px', marginBottom: 10 }}
+        value={comment}
+        onChange={(e) => setComment(e.target.value)}
+        placeholder="Write your review here..."
         required
+        style={{ width: '100%', minHeight: '80px' }}
       />
-      <div style={{ marginBottom: 10 }}>
-        Rating:{' '}
+      <br />
+      <label>
+        Rating (1-5):{' '}
         <input
           type="number"
+          min="1"
+          max="5"
           value={rating}
-          onChange={(e) => setRating(e.target.value)}
-          min={1}
-          max={10}
+          onChange={(e) => setRating(Number(e.target.value))}
           required
         />
-      </div>
-      <button
-        type="submit"
-        style={{
-          background: '#1890ff',
-          color: 'white',
-          border: 'none',
-          padding: '6px 12px',
-          cursor: 'pointer',
-          borderRadius: 4
-        }}
-      >
+      </label>
+      <br />
+      <button type="submit" style={{ marginTop: '10px' }}>
         Submit Review
       </button>
     </form>
