@@ -142,7 +142,7 @@ const App = () => {
           element={<Profile user={user} setUser={setUser} />}
         />
         <Route path="/about" element={<About />} />
-        <Route path="/cars/:carId" element={<CarDetails />} />
+        <Route path="/cars/:carId" element={<CarDetails user={user} />} />
       </Routes>
     </Router>
   )

@@ -28,17 +28,28 @@ const ReviewForm = ({ carId, token, onReviewPosted }) => {
         style={{ width: '100%', minHeight: '80px' }}
       />
       <br />
-      <label>
-        Rating (1-5):{' '}
-        <input
-          type="number"
-          min="1"
-          max="5"
-          value={rating}
-          onChange={(e) => setRating(Number(e.target.value))}
-          required
-        />
-      </label>
+      <div style={{ margin: '10px 0' }}>
+        <span>Rating: </span>
+        {[1, 2, 3, 4, 5].map((num) => (
+          <span
+            key={num}
+            style={{
+              cursor: 'pointer',
+              color: num <= rating ? '#FFD700' : '#ccc',
+              fontSize: '1.5em'
+            }}
+            onClick={() => setRating(num)}
+            role="button"
+            tabIndex={0}
+            aria-label={`Set rating to ${num}`}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') setRating(num)
+            }}
+          >
+            ★
+          </span>
+        ))}
+      </div>
       <br />
       <button type="submit" style={{ marginTop: '10px' }}>
         Submit Review

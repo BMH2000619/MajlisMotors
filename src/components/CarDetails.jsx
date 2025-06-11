@@ -64,6 +64,7 @@ const CarDetails = ({ user }) => {
       </div>
 
       <CarReviews carId={car._id} refresh={refreshReviews} />
+      {console.log('User:', user)}
 
       {user ? (
         <ReviewForm
@@ -73,7 +74,7 @@ const CarDetails = ({ user }) => {
         />
       ) : (
         <p>
-          <Link to="/login">Sign in</Link> to write a review.
+          <Link to="/signin">Sign in</Link> to write a review.
         </p>
       )}
     </section>
