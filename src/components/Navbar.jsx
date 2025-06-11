@@ -10,6 +10,7 @@ const Navbar = ({ user, setUser }) => {
   }
 
   const handleSignOut = () => {
+    console.log('User signed out through Navbar component')
     localStorage.removeItem('token')
     setUser(null)
     navigate('/')
