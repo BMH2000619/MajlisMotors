@@ -106,3 +106,156 @@
   text-shadow: 0 2px 12px rgba(74,0,128,0.13);
   text-transform: uppercase;
 }
+
+.car-card-flip-container {
+  perspective: 1200px;
+  width: 320px;
+  height: 380px;
+  margin: 0 auto;
+  position: relative;
+  transition: box-shadow 0.2s;
+}
+.car-card-flip {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  backface-visibility: hidden;
+  transition: transform 0.6s cubic-bezier(.4,2,.6,1);
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(74,0,128,0.13), 0 1.5px 8px rgba(0,0,0,0.10);
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+.car-card-front {
+  z-index: 2;
+  transform: rotateY(0deg);
+}
+.car-card-back {
+  transform: rotateY(180deg);
+  z-index: 1;
+  background: linear-gradient(120deg, #f4f6fb 80%, #e3e6f0 100%);
+  color: #222;
+  padding: 18px 18px 0 18px;
+  box-shadow: 0 8px 32px rgba(74,0,128,0.10);
+}
+.car-card-flip-container.flipped .car-card-front {
+  transform: rotateY(-180deg);
+}
+.car-card-flip-container.flipped .car-card-back {
+  transform: rotateY(0deg);
+  z-index: 3;
+}
+.car-card-img {
+  width: 90%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin: 18px 0 10px 0;
+  box-shadow: 0 2px 8px rgba(74,0,128,0.10);
+  background: #fff;
+}
+.car-card-title {
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin: 10px 0 8px 0;
+  color: #4a0080;
+  text-align: center;
+}
+.car-card-flip-hint {
+  font-size: 0.98rem;
+  color: #8a2be2;
+  margin-top: 10px;
+  opacity: 0.8;
+  text-align: center;
+}
+.car-fav:hover,
+.car-rating span:hover {
+  color: #ffeb3b !important;
+  text-shadow: 0 2px 8px #8a2be2;
+}
+.car-rating span:focus {
+  outline: 2px solid #ffd54f;
+}
+
+/* Commit/Comment Section */
+.profile-commit-section {
+  width: 100%;
+  margin-top: 28px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 12px;
+  padding: 18px 16px 10px 16px;
+  box-shadow: 0 2px 8px rgba(74,0,128,0.07);
+}
+
+.profile-commit-title {
+  color: #ffd54f;
+  font-size: 1.18rem;
+  font-weight: 700;
+  margin-bottom: 10px;
+  letter-spacing: 0.5px;
+}
+
+.profile-commit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.profile-commit-input {
+  border-radius: 8px;
+  border: 1.5px solid #a18cd1;
+  padding: 10px 12px;
+  background: rgba(255,255,255,0.13);
+  color: #222;
+  font-size: 1rem;
+  resize: vertical;
+  min-height: 48px;
+  transition: border 0.2s;
+}
+
+.profile-commit-input:focus {
+  outline: none;
+  border: 1.5px solid #fa71cd;
+  background: rgba(255,255,255,0.18);
+}
+
+.profile-commit-btn {
+  align-self: flex-end;
+  background: linear-gradient(90deg, #a18cd1 0%, #6f35a0 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 22px;
+  font-weight: 700;
+  font-size: 1.02rem;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(138, 43, 226, 0.13);
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+}
+
+.profile-commit-btn:hover {
+  background: linear-gradient(90deg, #6f35a0 0%, #a18cd1 100%);
+  color: #ffd54f;
+}
+
+.profile-commit-list {
+  list-style: none;
+  padding: 0;
+  margin: 14px 0 0 0;
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.profile-commit-item {
+  background: rgba(255,255,255,0.11);
+  color: #4a0080;
+  border-radius: 6px;
+  padding: 7px 12px;
+  margin-bottom: 6px;
+  font-size: 0.98rem;
+  word-break: break-word;
+}

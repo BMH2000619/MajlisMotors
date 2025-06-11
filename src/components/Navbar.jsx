@@ -55,7 +55,18 @@ const Navbar = ({ user, setUser }) => {
           </Link>
         </div>
         <div className="navbar-title-wrapper">
-          <span className="navbar-title">Majlis Motors</span>
+          <span
+            className="navbar-title"
+            style={{
+              fontWeight: 800,
+              fontSize: "1.4rem",
+              letterSpacing: "1.5px",
+              color: "#fff",
+              textShadow: "0 2px 8px #4a0080",
+            }}
+          >
+            Majlis Motors
+          </span>
         </div>
         <div className="navbar-actions-box">
           {user ? (
