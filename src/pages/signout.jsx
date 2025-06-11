@@ -3,6 +3,7 @@ import Navbar from "../components/Navbar"
 
 const SignOut = ({ setUser }) => {
   const handleSignOut = () => {
+    console.log("User signed out through SignOut component")
     setUser(null)
     alert("Signed out!")
   }

@@ -110,8 +110,8 @@ const App = () => {
     const token = localStorage.getItem('token')
     const checkUserSession = async () => {
       try {
-        const sessionData = await CheckSession()
-        setUser(sessionData.user) // Adjust if CheckSession returns just user
+        const user = await CheckSession()
+        setUser(user) // Adjust if CheckSession returns just user
       } catch (err) {
         console.log('No valid session')
         setUser(null)
@@ -129,6 +129,7 @@ const App = () => {
     <Router>
       <Navbar user={user} setUser={setUser} />
       <audio src="../../public/assets/sound.mp3" autoPlay loop />
+
       <Routes>
         <Route path="/" element={<Home brands={brands} />} />
         <Route path="/cars" element={<CarList cars={cars} user={user} />} />
