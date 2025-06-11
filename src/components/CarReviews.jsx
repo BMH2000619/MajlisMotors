@@ -63,17 +63,58 @@ const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
     <div className="car-reviews-container">
       <h3>Reviews</h3>
       {reviews.length ? (
-        reviews.map((r, i) => (
-          <div key={i} className="car-reviews-item">
-            <strong>
-              {r.user_id?.firstName && r.user_id?.lastName
-                ? `${r.user_id.firstName} ${r.user_id.lastName}`
-                : r.user_id?.username || 'Anonymous'}
-            </strong>
-            : {r.comment} (⭐
-            {r.rating})
-          </div>
-        ))
+        reviews.map((r, i) => {
+          const isOwner =
+            user &&
+            r.user_id &&
+            (r.user_id._id === user.id || r.user_id === user.id)
+          const reviewerName =
+            r.user_id?.firstName && r.user_id?.lastName
+              ? `${r.user_id.firstName} ${r.user_id.lastName}`
+              : r.user_id?.username || 'Anonymous'
+
+          return (
+            <div key={i} className="car-reviews-item">
+              <strong>{reviewerName}</strong>:{' '}
+              {editingId === r._id ? (
+                <form onSubmit={handleEditSubmit} style={{ display: 'inline' }}>
+                  <input
+                    value={editComment}
+                    onChange={(e) => setEditComment(e.target.value)}
+                    required
+                    style={{ width: 200 }}
+                  />
+                  <input
+                    type="number"
+                    min="1"
+                    max="5"
+                    value={editRating}
+                    onChange={(e) => setEditRating(Number(e.target.value))}
+                    required
+                    style={{ width: 50, marginLeft: 8 }}
+                  />
+                  <button type="submit">Save</button>
+                  <button type="button" onClick={() => setEditingId(null)}>
+                    Cancel
+                  </button>
+                </form>
+              ) : (
+                <>
+                  {r.comment} (⭐{r.rating})
+                  {isOwner && (
+                    <>
+                      {' '}
+                      <button onClick={() => startEdit(r)}>Edit</button>
+                      <button onClick={() => handleDelete(r._id)}>
+                        Delete
+                      </button>
+                    </>
+                  )}
+                </>
+              )}
+            </div>
+          )
+        })
       ) : (
         <p>No reviews yet.</p>
       )}
