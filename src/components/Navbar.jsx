@@ -31,17 +31,11 @@ const Navbar = ({ user, setUser }) => {
               style={{ cursor: 'pointer' }}
             >
               <img
-                src={
-                  user.img ? `http://localhost:3001/${user.img}` : profilePic
-                }
+                src={user.profileImage || profilePic}
                 alt="Profile"
                 className="navbar-profile-pic"
               />
-              <span>
-                {user.firstName && user.lastName
-                  ? `${user.firstName} ${user.lastName}`
-                  : user.username || 'Profile'}
-              </span>
+              <span>{user.name || user.username || 'Profile'}</span>
             </div>
           )}
           <Link to="/" className="navbar-home-link">

@@ -1,14 +1,34 @@
 import Client from './api'
 
+// Example - should return an array
 export const GetReviewsByCarId = async (carId) => {
   const res = await Client.get(`/reviews/car/${carId}`)
-  return { reviews: res.data }
+  return res.data // should be the array directly
 }
 
+
 export const PostReview = async ({ carId, comment, rating }, token) => {
-  return Client.post(
+  const res = await Client.post(
     '/reviews',
     { car_id: carId, comment, rating },
-    { headers: { Authorization: `Bearer ${token}` } }
+    {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }
   )
+  return res.data
 }
+
+export const DeleteReview = async (reviewId, token) => {
+  return Client.delete(`/reviews/${reviewId}`, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+}
+
+export const UpdateReview = async (reviewId, data, token) => {
+  return Client.put(`/reviews/${reviewId}`, data, {
+    headers: { Authorization: `Bearer ${token}` }
+  })
+}
+
