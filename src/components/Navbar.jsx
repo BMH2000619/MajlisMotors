@@ -10,6 +10,7 @@ const Navbar = ({ user, setUser }) => {
   }
 
   const handleSignOut = () => {
+    console.log('User signed out through Navbar component')
     localStorage.removeItem('token')
     setUser(null)
     navigate('/')
@@ -59,10 +60,10 @@ const Navbar = ({ user, setUser }) => {
             className="navbar-title"
             style={{
               fontWeight: 800,
-              fontSize: "1.4rem",
-              letterSpacing: "1.5px",
-              color: "#fff",
-              textShadow: "0 2px 8px #4a0080",
+              fontSize: '1.4rem',
+              letterSpacing: '1.5px',
+              color: '#fff',
+              textShadow: '0 2px 8px #4a0080'
             }}
           >
             Majlis Motors
