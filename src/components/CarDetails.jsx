@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import CarReviews from './CarReviews'
 import ReviewForm from './ReviewForm'
-import Client from '../services/api'
+import Client from '../services/api' // Axios instance
 
 const CarDetails = ({ user }) => {
+  console.log('CarDetails user:', user)
   const { carId } = useParams()
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
@@ -17,7 +18,6 @@ const CarDetails = ({ user }) => {
         const res = await Client.get(`/cars/${carId}`)
         setCar(res.data)
       } catch (err) {
-        console.error('Failed to fetch car:', err)
         setCar(null)
       } finally {
         setLoading(false)
@@ -43,14 +43,23 @@ const CarDetails = ({ user }) => {
         {car.name}{' '}
         <span style={{ color: '#757575', fontWeight: 400 }}>({car.year})</span>
       </h2>
-      <div className="car-details-card">
+      <div
+        className="car-details-card"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 24,
+          marginBottom: 24
+        }}
+      >
         <img
           src={car.image}
           alt={car.name}
           className="car-details-img"
-          style={{ maxWidth: '100%', borderRadius: 8 }}
+          style={{ display: 'block', margin: '0 auto' }}
         />
-        <div className="car-details-info">
+        <div className="car-details-info" style={{ textAlign: 'center' }}>
           <p>
             <strong>Type:</strong> {car.type}
           </p>
@@ -63,7 +72,12 @@ const CarDetails = ({ user }) => {
         </div>
       </div>
 
-      <CarReviews carId={car._id} refresh={refreshReviews} />
+      <CarReviews
+        carId={car._id}
+        refresh={refreshReviews}
+        user={user}
+        onReviewChanged={triggerRefresh}
+      />
 
       {user ? (
         <ReviewForm
@@ -73,7 +87,7 @@ const CarDetails = ({ user }) => {
         />
       ) : (
         <p>
-          <Link to="/login">Sign in</Link> to write a review.
+          <a href="/signin">Sign in</a> to write a review.
         </p>
       )}
     </section>

@@ -69,7 +69,7 @@ const cars = [
     color: 'black',
     mileage: '5,000 km',
     price: '$42,000',
-    image: '/images/mercedes.jpg' // Add this line (place mercedes.jpg in public/images)
+    image: '/images/mercedes.jpg'
   }
 ]
 
@@ -112,7 +112,7 @@ const App = () => {
     const checkUserSession = async () => {
       try {
         const user = await CheckSession()
-        setUser(user) // Adjust if CheckSession returns just user
+        setUser(user)
       } catch (err) {
         console.log('No valid session')
         setUser(null)
@@ -142,7 +142,7 @@ const App = () => {
           element={<Profile user={user} setUser={setUser} />}
         />
         <Route path="/about" element={<About />} />
-        <Route path="/cars/:carId" element={<CarDetails />} />
+        <Route path="/cars/:carId" element={<CarDetails user={user} />} />
       </Routes>
     </Router>
   )

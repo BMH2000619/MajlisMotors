@@ -1,21 +1,23 @@
-import React, { useEffect, useState } from "react"
-import { GetReviewsByCarId, PostReview } from "../services/ShowReview"
+import React, { useEffect, useState } from 'react'
+import {
+  GetReviewsByCarId,
+  DeleteReview,
+  UpdateReview
+} from '../services/ShowReview'
 
-const CarReviews = ({ carId, refresh }) => {
+const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
   const [reviews, setReviews] = useState([])
-  const [comment, setComment] = useState("")
-  const [rating, setRating] = useState(0)
-  const [submitting, setSubmitting] = useState(false)
-  const [commit, setCommit] = useState("")
-  const [commits, setCommits] = useState([])
+  const [editingId, setEditingId] = useState(null)
+  const [editComment, setEditComment] = useState('')
+  const [editRating, setEditRating] = useState(0)
 
   useEffect(() => {
     const fetchReviews = async () => {
       try {
         const data = await GetReviewsByCarId(carId)
-        setReviews(data.reviews || [])
+        setReviews(Array.isArray(data) ? data : [])
       } catch (err) {
-        console.error("Failed to load reviews:", err)
+        console.error('Failed to load reviews:', err)
         setReviews([])
       }
     }
@@ -25,118 +27,83 @@ const CarReviews = ({ carId, refresh }) => {
     }
   }, [carId, refresh])
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!comment.trim() || !rating) return
-    setSubmitting(true)
-    try {
-      await PostReview(carId, comment, rating)
-      setComment("")
-      setRating(0)
-      // Refresh reviews after posting
-      const data = await GetReviewsByCarId(carId)
-      setReviews(data.reviews || [])
-    } catch (err) {
-      alert("Failed to submit review.")
+  const handleDelete = async (reviewId) => {
+    if (window.confirm('Delete this review?')) {
+      try {
+        await DeleteReview(reviewId, user.token)
+        onReviewChanged()
+      } catch (err) {
+        alert('Failed to delete review.')
+      }
     }
-    setSubmitting(false)
   }
 
-  // Commit box logic (local only)
-  const handleCommitSubmit = (e) => {
+  const startEdit = (review) => {
+    setEditingId(review._id)
+    setEditComment(review.comment)
+    setEditRating(review.rating)
+  }
+
+  const handleEditSubmit = async (e) => {
     e.preventDefault()
-    if (!commit.trim()) return
-    setCommits([...commits, commit.trim()])
-    setCommit("")
+    try {
+      await UpdateReview(
+        editingId,
+        { comment: editComment, rating: editRating },
+        user.token
+      )
+      setEditingId(null)
+      onReviewChanged()
+    } catch (err) {
+      alert('Failed to update review.')
+    }
   }
 
   return (
     <div className="car-reviews-container">
       <h3>Reviews</h3>
-      <form onSubmit={handleSubmit} className="car-reviews-form">
-        <div className="car-reviews-rating-row">
-          <span className="car-reviews-rating-label">
-            Your Rating:
-          </span>
-          {[1, 2, 3, 4, 5].map((num) => (
-            <span
-              key={num}
-              className={`car-reviews-star${num <= rating ? " active" : ""}`}
-              onClick={() => setRating(num)}
-              role="button"
-              tabIndex={0}
-              aria-label={`Set rating to ${num}`}
-            >
-              ★
-            </span>
-          ))}
-        </div>
-        <textarea
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Write your review..."
-          rows={2}
-          className="car-reviews-textarea"
-        />
-        <button
-          type="submit"
-          disabled={submitting}
-          className="car-reviews-submit-btn"
-        >
-          {submitting ? "Submitting..." : "Submit Review"}
-        </button>
-      </form>
       {reviews.length ? (
         reviews.map((r, i) => (
           <div key={i} className="car-reviews-item">
-            <strong>{r.user?.username || "Anonymous"}</strong>: {r.comment} (⭐
-            {r.rating})
+            <strong>{r.user_id?.name || 'Anonymous'}</strong>:{' '}
+            {editingId === r._id ? (
+              <form onSubmit={handleEditSubmit} style={{ display: 'inline' }}>
+                <input
+                  value={editComment}
+                  onChange={(e) => setEditComment(e.target.value)}
+                  required
+                  style={{ width: 200 }}
+                />
+                <input
+                  type="number"
+                  min="1"
+                  max="5"
+                  value={editRating}
+                  onChange={(e) => setEditRating(Number(e.target.value))}
+                  required
+                  style={{ width: 50, marginLeft: 8 }}
+                />
+                <button type="submit">Save</button>
+                <button type="button" onClick={() => setEditingId(null)}>
+                  Cancel
+                </button>
+              </form>
+            ) : (
+              <>
+                {r.comment} (⭐{r.rating})
+                {user && r.user_id && r.user_id._id === user.id && (
+                  <>
+                    {' '}
+                    <button onClick={() => startEdit(r)}>Edit</button>
+                    <button onClick={() => handleDelete(r._id)}>Delete</button>
+                  </>
+                )}
+              </>
+            )}
           </div>
         ))
       ) : (
         <p>No reviews yet.</p>
-      )}
-
-      {/* Leave a Commit Section */}
-      <form onSubmit={handleCommitSubmit} className="car-reviews-form" style={{ marginTop: 18 }}>
-        <h4 style={{ margin: 0 }}>Leave a Commit</h4>
-        <textarea
-          value={commit}
-          onChange={e => setCommit(e.target.value)}
-          placeholder="Write a commit..."
-          rows={2}
-          className="car-reviews-textarea"
-        />
-        <button
-          type="submit"
-          className="car-reviews-submit-btn"
-        >
-          Submit Commit
-        </button>
-      </form>
-      {commits.length > 0 && (
-        <ul style={{ marginTop: 10, paddingLeft: 0 }}>
-          {commits.map((c, idx) => (
-            <li
-              key={idx}
-              style={{
-                background: "rgba(255,255,255,0.18)",
-                color: "#4a0080",
-                borderRadius: 6,
-                padding: "5px 10px",
-                marginBottom: 4,
-                fontSize: "0.96rem",
-                wordBreak: "break-word",
-                fontWeight: 600,
-                boxShadow: "0 1px 4px #8a2be222",
-                borderLeft: "4px solid #8a2be2",
-                listStyle: "none",
-              }}
-            >
-              {c}
-            </li>
-          ))}
-        </ul>
       )}
     </div>
   )
