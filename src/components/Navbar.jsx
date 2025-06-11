@@ -1,9 +1,13 @@
 import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import profilePic from '../../public/images/dodge.jpg'
 
 const Navbar = ({ user, setUser }) => {
+  const location = useLocation()
   const navigate = useNavigate()
+
+  // Show back button only on car details page
+  const showBackBtn = /^\/cars\/[^/]+$/.test(location.pathname)
 
   const handleProfileClick = () => {
     navigate('/profile')
@@ -61,6 +65,15 @@ const Navbar = ({ user, setUser }) => {
           )}
         </div>
       </div>
+      {showBackBtn && (
+        <button
+          className="car-details-back-btn"
+          onClick={() => navigate(-1)}
+          style={{ marginRight: 18 }}
+        >
+          ← Back
+        </button>
+      )}
     </nav>
   )
 }
