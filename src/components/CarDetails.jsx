@@ -5,6 +5,7 @@ import ReviewForm from './ReviewForm'
 import Client from '../services/api' // Axios instance
 
 const CarDetails = ({ user }) => {
+  console.log('CarDetails user:', user)
   const { carId } = useParams()
   const navigate = useNavigate()
   const [car, setCar] = useState(null)
@@ -49,7 +50,7 @@ const CarDetails = ({ user }) => {
           flexDirection: 'column',
           alignItems: 'center',
           gap: 24,
-          marginBottom: 24,
+          marginBottom: 24
         }}
       >
         <img
@@ -71,7 +72,12 @@ const CarDetails = ({ user }) => {
         </div>
       </div>
 
-      <CarReviews carId={car._id} refresh={refreshReviews} />
+      <CarReviews
+        carId={car._id}
+        refresh={refreshReviews}
+        user={user}
+        onReviewChanged={triggerRefresh}
+      />
 
       {user ? (
         <ReviewForm
@@ -81,7 +87,7 @@ const CarDetails = ({ user }) => {
         />
       ) : (
         <p>
-          {/* <a href="/login">Sign in</a> to write a review. */}
+          <a href="/signin">Sign in</a> to write a review.
         </p>
       )}
     </section>

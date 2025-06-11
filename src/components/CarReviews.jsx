@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from 'react'
-import { GetReviewsByCarId, PostReview } from '../services/ShowReview'
+import {
+  GetReviewsByCarId,
+  DeleteReview,
+  UpdateReview
+} from '../services/ShowReview'
 
-const CarReviews = ({ carId, refresh }) => {
+const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
   const [reviews, setReviews] = useState([])
-  const [comment, setComment] = useState('')
-  const [rating, setRating] = useState(0)
-  const [submitting, setSubmitting] = useState(false)
+  const [editingId, setEditingId] = useState(null)
+  const [editComment, setEditComment] = useState('')
+  const [editRating, setEditRating] = useState(0)
 
   useEffect(() => {
     const fetchReviews = async () => {
@@ -22,64 +26,80 @@ const CarReviews = ({ carId, refresh }) => {
       fetchReviews()
     }
   }, [carId, refresh])
-  
 
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-    if (!comment.trim() || !rating) return
-    setSubmitting(true)
-    try {
-      await PostReview(carId, comment, rating)
-      setComment('')
-      setRating(0)
-      // Refresh reviews after posting
-      const data = await GetReviewsByCarId(carId)
-      setReviews(Array.isArray(data) ? data : [])
-    } catch (err) {
-      alert('Failed to submit review.')
+  const handleDelete = async (reviewId) => {
+    if (window.confirm('Delete this review?')) {
+      try {
+        await DeleteReview(reviewId, user.token)
+        onReviewChanged()
+      } catch (err) {
+        alert('Failed to delete review.')
+      }
     }
-    setSubmitting(false)
+  }
+
+  const startEdit = (review) => {
+    setEditingId(review._id)
+    setEditComment(review.comment)
+    setEditRating(review.rating)
+  }
+
+  const handleEditSubmit = async (e) => {
+    e.preventDefault()
+    try {
+      await UpdateReview(
+        editingId,
+        { comment: editComment, rating: editRating },
+        user.token
+      )
+      setEditingId(null)
+      onReviewChanged()
+    } catch (err) {
+      alert('Failed to update review.')
+    }
   }
 
   return (
     <div className="car-reviews-container">
       <h3>Reviews</h3>
-      <form onSubmit={handleSubmit} className="car-reviews-form">
-        <div className="car-reviews-rating-row">
-          <span className="car-reviews-rating-label">Your Rating:</span>
-          {[1, 2, 3, 4, 5].map((num) => (
-            <span
-              key={num}
-              className={`car-reviews-star${num <= rating ? ' active' : ''}`}
-              onClick={() => setRating(num)}
-              role="button"
-              tabIndex={0}
-              aria-label={`Set rating to ${num}`}
-            >
-              ★
-            </span>
-          ))}
-        </div>
-        <textarea
-          value={comment}
-          onChange={(e) => setComment(e.target.value)}
-          placeholder="Write your review..."
-          rows={2}
-          className="car-reviews-textarea"
-        />
-        <button
-          type="submit"
-          disabled={submitting}
-          className="car-reviews-submit-btn"
-        >
-          {submitting ? 'Submitting...' : 'Submit Review'}
-        </button>
-      </form>
       {reviews.length ? (
         reviews.map((r, i) => (
           <div key={i} className="car-reviews-item">
-            <strong>{r.user_id?.name || 'Anonymous'}</strong>: {r.content} (⭐
-            {r.rating})
+            <strong>{r.user_id?.name || 'Anonymous'}</strong>:{' '}
+            {editingId === r._id ? (
+              <form onSubmit={handleEditSubmit} style={{ display: 'inline' }}>
+                <input
+                  value={editComment}
+                  onChange={(e) => setEditComment(e.target.value)}
+                  required
+                  style={{ width: 200 }}
+                />
+                <input
+                  type="number"
+                  min="1"
+                  max="5"
+                  value={editRating}
+                  onChange={(e) => setEditRating(Number(e.target.value))}
+                  required
+                  style={{ width: 50, marginLeft: 8 }}
+                />
+                <button type="submit">Save</button>
+                <button type="button" onClick={() => setEditingId(null)}>
+                  Cancel
+                </button>
+              </form>
+            ) : (
+              <>
+                {r.comment} (⭐{r.rating})
+                {user && r.user_id && r.user_id._id === user.id && (
+                  <>
+                    {' '}
+                    <button onClick={() => startEdit(r)}>Edit</button>
+                    <button onClick={() => handleDelete(r._id)}>Delete</button>
+                  </>
+                )}
+              </>
+            )}
           </div>
         ))
       ) : (
