@@ -39,9 +39,6 @@ const CarDetails = ({ user }) => {
 
   return (
     <section className="car-category-container" aria-label="Car Details">
-      <button onClick={() => navigate(-1)} className="back-btn">
-        ← Back
-      </button>
       <h2 className="category-title" style={{ marginBottom: 24 }}>
         {car.name}{' '}
         <span style={{ color: '#757575', fontWeight: 400 }}>({car.year})</span>
