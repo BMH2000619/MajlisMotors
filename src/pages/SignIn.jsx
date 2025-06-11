@@ -6,6 +6,7 @@ const initialState = { email: '', password: '' }
 
 const SignIn = ({ setUser }) => {
   const [formValues, setFormValues] = useState(initialState)
+  const [error, setError] = useState('')
   const navigate = useNavigate()
 
   const handleChange = (e) => {
@@ -14,10 +15,19 @@ const SignIn = ({ setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const payload = await SignInUser(formValues) // payload must be the full user object
-    setFormValues(initialState)
-    setUser(payload)
-    navigate('/')
+    setError('')
+    try {
+      const payload = await SignInUser(formValues)
+      if (!payload) {
+        setError('Invalid credentials. Please try again.')
+        return
+      }
+      setFormValues(initialState)
+      setUser(payload)
+      navigate('/')
+    } catch (err) {
+      setError('Sign in failed. Please check your email and password.')
+    }
   }
 
   return (
@@ -47,6 +57,17 @@ const SignIn = ({ setUser }) => {
               className="sigin-input"
             />
           </label>
+          {error && (
+            <div
+              style={{
+                color: 'red',
+                textAlign: 'center',
+                marginBottom: '10px'
+              }}
+            >
+              {error}
+            </div>
+          )}
           <button type="submit" className="sigin-button">
             Login
           </button>

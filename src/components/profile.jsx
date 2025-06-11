@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import defaultProfilePic from '../../public/images/dodge.jpg'
+import defaultProfilePic from '../../public/images/default-profile.jpg'
 import './Profile.css'
 
 const Profile = ({ user }) => {
