@@ -1,6 +1,18 @@
-import React, { useState } from "react"
+import React, { useState } from 'react'
+import CarReviews from './CarReviews'
+import ReviewForm from './ReviewForm'
 
-const CarCard = ({ car }) => {
+const fallbackImg = '/images/ffff.jpg'
+
+const carImages = {
+  // Toyota: '/images/ffff.jpg',
+  // Honda: '/images/honda.jpg',
+  // Nissan: '/images/nissan.jpg',
+  // Audi: '/images/audi.jpg',
+  // Mercedes: '/images/mercedes.jpg'
+}
+
+const CarCard = ({ car, user }) => {
   const [flipped, setFlipped] = useState(false)
   const [favorite, setFavorite] = useState(false)
   const [rating, setRating] = useState(0)
@@ -20,10 +32,7 @@ const CarCard = ({ car }) => {
       <div className="car-card-flip car-card-front">
         <img src={car.image} alt={car.model} className="car-card-img" />
         <div className="car-card-title">
-          <span role="img" aria-label="car" className="car-card-emoji">
-            🚗
-          </span>
-          {car.make} {car.model}{" "}
+          🚗 {car.make} {car.model}{' '}
           <span className="car-card-year">({car.year})</span>
         </div>
         {/* Show price on the front of the card */}

@@ -1,12 +1,18 @@
-import React from "react"
-import { Link, useNavigate } from "react-router-dom"
-import profilePic from "../../public/images/dodge.jpg"
+import React from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import profilePic from '../../public/images/dodge.jpg'
 
-const Navbar = () => {
+const Navbar = ({ user, setUser }) => {
   const navigate = useNavigate()
 
   const handleProfileClick = () => {
-    navigate("/profile")
+    navigate('/profile')
+  }
+
+  const handleSignOut = () => {
+    localStorage.removeItem('token')
+    setUser(null)
+    navigate('/')
   }
 
   return (
@@ -14,25 +20,33 @@ const Navbar = () => {
       <div className="navbar-content">
         <div
           className="navbar-left"
-          style={{ display: "flex", alignItems: "center", gap: "14px" }}
+          style={{ display: 'flex', alignItems: 'center', gap: '10px' }}
         >
-          <img
-            src={profilePic}
-            alt="Profile"
-            className="navbar-profile-pic"
-            style={{
-              width: "38px",
-              height: "38px",
-              borderRadius: "50%",
-              objectFit: "cover",
-              border: "2.5px solid #fff",
-              boxShadow: "0 2px 8px rgba(74,0,128,0.13)",
-              cursor: "pointer",
-              transition: "box-shadow 0.2s",
-            }}
-            onClick={handleProfileClick}
-            title="View Profile"
-          />
+          {user && (
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                cursor: 'pointer'
+              }}
+              onClick={handleProfileClick}
+            >
+              <img
+                src={user.profileImage || profilePic}
+                alt="Profile"
+                className="navbar-profile-pic"
+                style={{
+                  width: '36px',
+                  height: '36px',
+                  borderRadius: '50%',
+                  objectFit: 'cover',
+                  border: '2px solid #fff'
+                }}
+              />
+              <span>{user.name || user.username || 'Profile'}</span>
+            </div>
+          )}
           <Link to="/" className="navbar-home-link">
             Home
           </Link>
@@ -54,13 +68,21 @@ const Navbar = () => {
             Majlis Motors
           </span>
         </div>
-        <div className="navbar-actions-box" style={{ gap: "10px" }}>
-          <Link to="/signin" className="navbar-action-btn">
-            Sign Up
-          </Link>
-          <Link to="/login" className="navbar-action-btn">
-            Login
-          </Link>
+        <div className="navbar-actions-box">
+          {user ? (
+            <button className="navbar-action-btn" onClick={handleSignOut}>
+              Sign Out
+            </button>
+          ) : (
+            <>
+              <Link to="/signin" className="navbar-action-btn">
+                Sign In
+              </Link>
+              <Link to="/register" className="navbar-action-btn">
+                Sign Up
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </nav>

@@ -1,15 +1,24 @@
-import React, { useState } from "react"
-import defaultProfilePic from "../../public/images/dodge.jpg"
-import "./Profile.css"
+import React, { useState } from 'react'
+import defaultProfilePic from '../../public/images/dodge.jpg'
+import './Profile.css'
 
-const Profile = () => {
+const Profile = ({ user }) => {
   const [editing, setEditing] = useState(false)
-  const [name, setName] = useState("John Doe")
-  const [email, setEmail] = useState("johndoe@email.com")
-  const [phone, setPhone] = useState("+1 234 567 890")
-  const [profilePic, setProfilePic] = useState(defaultProfilePic)
-  const [comment, setComment] = useState("")
-  const [comments, setComments] = useState([])
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [profilePic, setProfilePic] = useState(
+    user?.profileImage || defaultProfilePic
+  )
+
+  // When entering edit mode, initialize fields from user
+  const handleEdit = () => {
+    setName(user.name || user.username || '')
+    setEmail(user.email || '')
+    setPhone(user.phone || '')
+    setProfilePic(user.profileImage || defaultProfilePic)
+    setEditing(true)
+  }
 
   const handleSave = (e) => {
     e.preventDefault()
@@ -28,17 +37,20 @@ const Profile = () => {
     }
   }
 
-  const handleCommentSubmit = (e) => {
-    e.preventDefault()
-    if (comment.trim() === "") return
-    setComments([...comments, comment])
-    setComment("")
+
+  if (!user) {
+    return <div>Please sign in to view your profile.</div>
   }
 
   return (
     <div className="profile-container">
-      <img src={profilePic} alt="Profile" className="profile-pic" />
-      <h2 className="profile-title">User Profile</h2>
+      <img
+        src={editing ? profilePic : user.profileImage || defaultProfilePic}
+        alt="Profile"
+        className="profile-pic"
+      />
+      <h2>{user.name || user.username}</h2>
+      <p>Email: {user.email}</p>
       {editing ? (
         <form onSubmit={handleSave} className="profile-edit-form">
           <div className="profile-info">
@@ -84,15 +96,15 @@ const Profile = () => {
       ) : (
         <>
           <div className="profile-info">
-            <strong>Name:</strong> {name}
+            <strong>Name:</strong> {user.name || user.username}
           </div>
           <div className="profile-info">
-            <strong>Email:</strong> {email}
+            <strong>Email:</strong> {user.email}
           </div>
           <div className="profile-info">
-            <strong>Phone:</strong> {phone}
+            <strong>Phone:</strong> {user.phone || 'N/A'}
           </div>
-          <button className="profile-edit-btn" onClick={() => setEditing(true)}>
+          <button className="profile-edit-btn" onClick={handleEdit}>
             Edit Profile
           </button>
         </>

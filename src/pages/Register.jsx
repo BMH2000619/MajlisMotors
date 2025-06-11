@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { RegisterUser } from '../services/Auth'
 
 const Signup = ({ setUser }) => {
@@ -10,6 +11,7 @@ const Signup = ({ setUser }) => {
   const [confirmPassword, setConfirmPassword] = useState('')
   const [img, setImg] = useState(null)
   const [error, setError] = useState('')
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -18,25 +20,16 @@ const Signup = ({ setUser }) => {
       return
     }
     setError('')
-    const user = {
+    await RegisterUser({
       username,
       firstName,
       lastName,
       email,
       password,
-      img
-    }
-    setUser(user)
-    await RegisterUser({
-      username: username,
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      img: img // Optional, include only if uploading
+      img // Optional, include only if uploading
     })
-
     alert(`Signed up as: ${firstName} ${lastName} (${email})`)
+    navigate('/signin')
   }
 
   const onGoogleSignUp = () => {
