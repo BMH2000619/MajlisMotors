@@ -1,31 +1,18 @@
 import Client from './api'
 
-export const RegisterUser = async (data) => {
-  try {
-    console.log(data)
-    const res = await Client.post('/auth/register', data)
-    return res.data
-  } catch (error) {
-    throw error
-  }
+export const SignInUser = async (data) => {
+  const res = await Client.post('/auth/login', data)
+  localStorage.setItem('token', res.data.token)
+  console.log('Signed in user:', res.data.user) // Log user data
+  return res.data.user // Make sure this is the full user object
 }
 
-export const SignInUser = async (data) => {
-  try {
-    const res = await Client.post('/auth/login', data)
-    // Set the current signed in users token to localStorage
-    return res.data.user
-  } catch (error) {
-    throw error
-  }
+export const RegisterUser = async (data) => {
+  const res = await Client.post('/auth/register', data)
+  return res.data
 }
 
 export const CheckSession = async () => {
-  try {
-    // Checks if the current token if it exists is valid
-    const res = await Client.get('/auth/session')
-    return res.data
-  } catch (error) {
-    throw error
-  }
+  const res = await Client.get('/auth/session')
+  return res.data
 }

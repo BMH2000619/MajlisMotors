@@ -3,14 +3,15 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import Navbar from './components/Navbar'
 import Home from './components/Home'
 import CarList from './components/CarList'
-import Signup from './pages/Signup'
-import Login from './pages/Login'
+import Signup from './pages/Register'
+import Login from './pages/SignIn'
 import SignOut from './pages/SignOut'
 import Profile from './components/Profile'
 import About from './components/About'
 import './App.css'
 
 import { GetBrands } from './services/ShowBrands'
+
 import { GetCars } from './services/ShowCars' // You already have this service!
 import { CheckSession } from './services/Auth'
 
@@ -29,9 +30,9 @@ const App = () => {
         console.error('Failed to fetch brands:', err)
       }
     }
-
     fetchBrands()
   }, [])
+
 
   // Load cars
   useEffect(() => {
@@ -58,22 +59,44 @@ const App = () => {
         setUser(null)
       }
     }
+  }, [])
 
+useEffect(() => {
+    const token = localStorage.getItem('token')
+    const checkToken = async () => {
+      try {
+        const user = await CheckSession()
+        setUser(user)
+      } catch (err) {
+        setUser(null)
+      }
+    }
+    if (token) {
+      checkToken()
+    } else {
+      setUser(null)
+    }
     checkUserSession()
+
+
   }, [])
 
   return (
     <Router>
-      <Navbar user={user} />{' '}
-      {/* Optional: can pass user if Navbar supports it */}
+
+      <Navbar user={user} setUser={setUser} />
       <audio src="../../public/assets/sound.mp3" autoPlay loop />
       <Routes>
         <Route path="/" element={<Home brands={brands} />} />
         <Route path="/cars" element={<CarList cars={cars} user={user} />} />
-        <Route path="/signin" element={<Signup setUser={setUser} />} />
-        <Route path="/login" element={<Login setUser={setUser} />} />
+        <Route path="/register" element={<Signup setUser={setUser} />} />
+        <Route path="/signin" element={<Login setUser={setUser} />} />
         <Route path="/signout" element={<SignOut setUser={setUser} />} />
-        <Route path="/profile" element={<Profile user={user} />} />
+        <Route
+          path="/profile"
+          element={<Profile user={user} setUser={setUser} />}
+        />
+
         <Route path="/about" element={<About />} />
       </Routes>
     </Router>

@@ -500,8 +500,7 @@ h1 {
   z-index: 3;
 }
 /* --- Responsive --- */
-@nk Media
- (max-width: 700px) {
+@nk Media (max-width: 700px) {
   .car-category-container {
     padding: 16px 8px;
     margin: 20px 4px;
