@@ -6,7 +6,7 @@ import CarList from './components/CarList'
 import Signup from './pages/Register'
 import Login from './pages/SignIn'
 import SignOut from './pages/SignOut'
-import Profile from './components/Profile'
+import Profile from './components/profile'
 import About from './components/About'
 import './App.css'
 

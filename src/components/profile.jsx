@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import defaultProfilePic from '../../public/images/dodge.jpg'
-import './Profile.css'
+import './profile.css'
 
 const Profile = ({ user }) => {
   const [editing, setEditing] = useState(false)
