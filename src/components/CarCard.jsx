@@ -14,95 +14,167 @@ const carImages = {
 
 const CarCard = ({ car, user }) => {
   const [flipped, setFlipped] = useState(false)
-  const [refreshReviews, setRefreshReviews] = useState(false)
-
-  const carImg = car.image || carImages[car.make] || fallbackImg
-
-  const triggerRefresh = () => setRefreshReviews((prev) => !prev)
+  const [favorite, setFavorite] = useState(false)
+  const [rating, setRating] = useState(0)
 
   return (
     <div
-      className={`car-card-flip-container${flipped ? ' flipped' : ''}`}
-      onClick={() => setFlipped((f) => !f)}
+      className={`car-card-flip-container${flipped ? " flipped" : ""}`}
       tabIndex={0}
       aria-label="Flip car card"
+      style={{ cursor: "pointer" }}
+      onClick={() => setFlipped((f) => !f)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") setFlipped((f) => !f)
+      }}
     >
-      {/* Front: Car Image */}
+      {/* Front Side */}
       <div className="car-card-flip car-card-front">
-        <img
-          src={carImg}
-          alt={`${car.make} ${car.model}`}
-          className="car-card-img"
-        />
+        <img src={car.image} alt={car.model} className="car-card-img" />
         <div className="car-card-title">
           🚗 {car.make} {car.model}{' '}
           <span className="car-card-year">({car.year})</span>
         </div>
-
-        <div style={{ marginTop: '10px' }}>
-          <CarReviews carId={car._id} refresh={refreshReviews} />
-        </div>
-
-        {user ? (
-          <ReviewForm
-            carId={car._id}
-            token={user.token}
-            onReviewPosted={triggerRefresh}
-          />
-        ) : (
-          <p style={{ fontSize: '0.9rem', marginTop: '10px' }}>
-            <a href="/signin">Sign in</a> to write a review.
-          </p>
+        {/* Show price on the front of the card */}
+        {car.price && (
+          <div
+            className="car-card-price"
+            style={{
+              color: "#8a2be2",
+              fontWeight: 800,
+              fontSize: "1.18rem",
+              margin: "8px 0 0 0",
+              letterSpacing: "0.5px",
+            }}
+          >
+            {car.price}
+          </div>
         )}
+        <div className="car-card-flip-hint">Click to see details</div>
       </div>
-
-      {/* Back: Car Details */}
+      {/* Back Side */}
       <div className="car-card-flip car-card-back">
-        <img
-          src={carImg}
-          alt={`${car.make} ${car.model}`}
-          className="car-card-img"
-          style={{ marginBottom: 12 }}
-        />
-        <div className="car-card-title">
-          🚗 {car.make} {car.model}{' '}
+        <img src={car.image} alt={car.model} className="car-card-img" />
+        <div
+          className="car-card-title"
+          style={{
+            color: "#4a0080",
+            fontWeight: 800,
+            fontSize: "1.3rem",
+            marginBottom: 10,
+          }}
+        >
+          {car.make} {car.model}{" "}
           <span className="car-card-year">({car.year})</span>
         </div>
-        <ul className="car-details-list">
+        <ul
+          className="car-details-list"
+          style={{ fontSize: "1.08rem", margin: "0 0 16px 0" }}
+        >
           {car.engine && (
             <li className="car-detail-item">
-              <span className="car-detail-label">Engine</span>
+              <span className="car-detail-label">Engine:</span>
               <span className="car-detail-value">{car.engine}</span>
             </li>
           )}
           {car.transmission && (
             <li className="car-detail-item">
-              <span className="car-detail-label">Transmission</span>
+              <span className="car-detail-label">Transmission:</span>
               <span className="car-detail-value">{car.transmission}</span>
             </li>
           )}
           {car.color && (
             <li className="car-detail-item">
-              <span className="car-detail-label">Color</span>
+              <span className="car-detail-label">Color:</span>
               <span className="car-detail-value">{car.color}</span>
             </li>
           )}
           {car.mileage && (
             <li className="car-detail-item">
-              <span className="car-detail-label">Mileage</span>
+              <span className="car-detail-label">Mileage:</span>
               <span className="car-detail-value">{car.mileage}</span>
             </li>
           )}
           {car.price && (
             <li className="car-detail-item">
-              <span className="car-detail-label">Price</span>
+              <span className="car-detail-label">Price:</span>
               <span className="car-detail-value car-detail-price">
                 {car.price}
               </span>
             </li>
           )}
         </ul>
-        <div className="car-card-flip-hint">Click to flip</div>
+        {/* Favorite and Rating */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "16px",
+            marginBottom: 10,
+          }}
+        >
+          {/* Favorite icon */}
+          <span
+            className="car-fav"
+            title={favorite ? "Remove from favorites" : "Add to favorites"}
+            style={{
+              cursor: "pointer",
+              fontSize: "1.5rem",
+              color: favorite ? "#ffd54f" : "#8a2be2",
+              transition: "color 0.2s",
+            }}
+            onClick={(e) => {
+              e.stopPropagation()
+              setFavorite((f) => !f)
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="Toggle favorite"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.stopPropagation()
+                setFavorite((f) => !f)
+              }
+            }}
+          >
+            {favorite ? "★" : "☆"}
+          </span>
+          {/* Rating stars */}
+          <span className="car-rating">
+            {[1, 2, 3, 4, 5].map((num) => (
+              <span
+                key={num}
+                style={{
+                  cursor: "pointer",
+                  color: num <= rating ? "#ffd54f" : "#8a2be2",
+                  fontSize: "1.3rem",
+                  transition: "color 0.2s",
+                }}
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setRating(num)
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.stopPropagation()
+                    setRating(num)
+                  }
+                }}
+                tabIndex={0}
+                role="button"
+                aria-label={`Set rating to ${num}`}
+              >
+                ★
+              </span>
+            ))}
+          </span>
+        </div>
+        <div
+          className="car-card-flip-hint"
+          style={{ color: "#8a2be2", fontWeight: 600 }}
+        >
+          Click to go back
+        </div>
       </div>
     </div>
   )

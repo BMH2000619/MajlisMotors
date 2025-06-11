@@ -37,6 +37,7 @@ const Profile = ({ user }) => {
     }
   }
 
+
   if (!user) {
     return <div>Please sign in to view your profile.</div>
   }
@@ -108,6 +109,30 @@ const Profile = ({ user }) => {
           </button>
         </>
       )}
+
+      {/* Commit/Comment Section */}
+      <div className="profile-commit-section">
+        <h3 className="profile-commit-title">Leave a Comment</h3>
+        <form onSubmit={handleCommentSubmit} className="profile-commit-form">
+          <textarea
+            className="profile-commit-input"
+            placeholder="Write your comment..."
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            rows={3}
+          />
+          <button type="submit" className="profile-commit-btn">
+            Submit
+          </button>
+        </form>
+        <ul className="profile-commit-list">
+          {comments.map((c, idx) => (
+            <li key={idx} className="profile-commit-item">
+              {c}
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   )
 }
