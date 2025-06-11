@@ -38,16 +38,27 @@ const CarDetails = ({ user }) => {
 
   return (
     <section className="car-category-container" aria-label="Car Details">
-      <button onClick={() => navigate(-1)} className="back-btn">
-        ← Back
-      </button>
       <h2 className="category-title" style={{ marginBottom: 24 }}>
         {car.name}{' '}
         <span style={{ color: '#757575', fontWeight: 400 }}>({car.year})</span>
       </h2>
-      <div className="car-details-card">
-        <img src={car.image} alt={car.name} className="car-details-img" />
-        <div className="car-details-info">
+      <div
+        className="car-details-card"
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          gap: 24,
+          marginBottom: 24,
+        }}
+      >
+        <img
+          src={car.image}
+          alt="Corolla"
+          className="car-details-img"
+          style={{ display: 'block', margin: '0 auto' }}
+        />
+        <div className="car-details-info" style={{ textAlign: 'center' }}>
           <p>
             <strong>Type:</strong> {car.type}
           </p>
@@ -70,7 +81,7 @@ const CarDetails = ({ user }) => {
         />
       ) : (
         <p>
-          <a href="/login">Sign in</a> to write a review.
+          {/* <a href="/login">Sign in</a> to write a review. */}
         </p>
       )}
     </section>
