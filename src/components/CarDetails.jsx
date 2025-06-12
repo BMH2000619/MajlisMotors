@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
-import CarReviews from './CarReviews'
-import ReviewForm from './ReviewForm'
 import Client from '../services/api' // Axios instance
+import ReviewForm from './ReviewForm'
+import CarReviews from './CarReviews'
 
 const CarDetails = ({ user }) => {
   console.log('CarDetails user:', user)
@@ -72,24 +72,25 @@ const CarDetails = ({ user }) => {
         </div>
       </div>
 
-      <CarReviews
-        carId={car._id}
-        refresh={refreshReviews}
-        user={user}
-        onReviewChanged={triggerRefresh}
-      />
-
-      {user ? (
-        <ReviewForm
+      <div className="car-reviews-container">
+        {user ? (
+          <ReviewForm
+            carId={car._id}
+            token={user.token}
+            onReviewPosted={triggerRefresh}
+          />
+        ) : (
+          <p style={{ textAlign: 'center', marginBottom: 18 }}>
+            <a href="/signin">Sign in</a> to write a review.
+          </p>
+        )}
+        <CarReviews
           carId={car._id}
-          token={user.token}
-          onReviewPosted={triggerRefresh}
+          refresh={refreshReviews}
+          user={user}
+          onReviewChanged={triggerRefresh}
         />
-      ) : (
-        <p>
-          <a href="/signin">Sign in</a> to write a review.
-        </p>
-      )}
+      </div>
     </section>
   )
 }

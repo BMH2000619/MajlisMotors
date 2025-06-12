@@ -4,6 +4,7 @@ import {
   DeleteReview,
   UpdateReview
 } from '../services/ShowReview'
+import Client from '../services/api'
 
 const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
   const [reviews, setReviews] = useState([])
@@ -17,14 +18,10 @@ const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
         const data = await GetReviewsByCarId(carId)
         setReviews(Array.isArray(data) ? data : [])
       } catch (err) {
-        console.error('Failed to load reviews:', err)
         setReviews([])
       }
     }
-
-    if (carId) {
-      fetchReviews()
-    }
+    if (carId) fetchReviews()
   }, [carId, refresh])
 
   const handleDelete = async (reviewId) => {
@@ -59,8 +56,19 @@ const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
     }
   }
 
+  // Helper to render stars
+  const renderStars = (rating) =>
+    [...Array(5)].map((_, i) => (
+      <span
+        key={i}
+        className={i < rating ? 'car-reviews-star active' : 'car-reviews-star'}
+      >
+        ★
+      </span>
+    ))
+
   return (
-    <div className="car-reviews-container">
+    <>
       <h3>Reviews</h3>
       {reviews.length ? (
         reviews.map((r, i) => {
@@ -75,13 +83,22 @@ const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
 
           return (
             <div key={i} className="car-reviews-item">
-              <strong>{reviewerName}</strong>:{' '}
+              <strong>{reviewerName}</strong>
               {editingId === r._id ? (
-                <form onSubmit={handleEditSubmit} style={{ display: 'inline' }}>
+                <form
+                  onSubmit={handleEditSubmit}
+                  style={{
+                    display: 'flex',
+                    gap: 8,
+                    alignItems: 'center',
+                    marginTop: 6
+                  }}
+                >
                   <input
                     value={editComment}
                     onChange={(e) => setEditComment(e.target.value)}
                     required
+                    className="car-reviews-edit-input"
                     style={{ width: 200 }}
                   />
                   <input
@@ -91,24 +108,39 @@ const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
                     value={editRating}
                     onChange={(e) => setEditRating(Number(e.target.value))}
                     required
-                    style={{ width: 50, marginLeft: 8 }}
+                    className="car-reviews-edit-input"
+                    style={{ width: 50 }}
                   />
-                  <button type="submit">Save</button>
-                  <button type="button" onClick={() => setEditingId(null)}>
+                  <button type="submit" className="car-reviews-submit-btn">
+                    Save
+                  </button>
+                  <button
+                    type="button"
+                    className="car-reviews-edit-btn"
+                    onClick={() => setEditingId(null)}
+                  >
                     Cancel
                   </button>
                 </form>
               ) : (
                 <>
-                  {r.comment} (⭐{r.rating})
+                  <div>{r.comment}</div>
+                  <div>{renderStars(r.rating)}</div>
                   {isOwner && (
-                    <>
-                      {' '}
-                      <button onClick={() => startEdit(r)}>Edit</button>
-                      <button onClick={() => handleDelete(r._id)}>
+                    <div className="car-reviews-actions">
+                      <button
+                        className="car-reviews-edit-btn"
+                        onClick={() => startEdit(r)}
+                      >
+                        Edit
+                      </button>
+                      <button
+                        className="car-reviews-delete-btn"
+                        onClick={() => handleDelete(r._id)}
+                      >
                         Delete
                       </button>
-                    </>
+                    </div>
                   )}
                 </>
               )}
@@ -118,7 +150,7 @@ const CarReviews = ({ carId, refresh, user, onReviewChanged }) => {
       ) : (
         <p>No reviews yet.</p>
       )}
-    </div>
+    </>
   )
 }
 

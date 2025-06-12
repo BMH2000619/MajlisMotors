@@ -14,11 +14,14 @@ const SignIn = ({ setUser }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const payload = await SignInUser(formValues)
-    setFormValues(initialState)
-    setUser(payload)
-    console.log('JWT token in localStorage:', localStorage.getItem('token')) // <-- Add this line
-    navigate('/')
+    try {
+      const payload = await SignInUser(formValues)
+      setFormValues(initialState)
+      setUser(payload)
+      navigate('/')
+    } catch (err) {
+      alert('Sign in failed. Please check your email and password.')
+    }
   }
 
   return (
