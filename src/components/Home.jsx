@@ -3,7 +3,7 @@ import CarBrands from './CarBrands'
 import Search from './Search'
 import CarList from './CarList'
 import './Home.css'
-import { GetCarsByBrand } from '../services/ShowCars' // Import your service
+import { GetCarsByBrand } from '../services/ShowCars' 
 
 const Home = ({ brands }) => {
   const [selectedBrand, setSelectedBrand] = useState(null)

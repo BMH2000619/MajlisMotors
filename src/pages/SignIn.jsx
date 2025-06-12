@@ -17,7 +17,7 @@ const SignIn = ({ setUser }) => {
     const payload = await SignInUser(formValues)
     setFormValues(initialState)
     setUser(payload)
-    console.log('JWT token in localStorage:', localStorage.getItem('token')) // <-- Add this line
+    console.log('JWT token in localStorage:', localStorage.getItem('token')) 
     navigate('/')
   }
 

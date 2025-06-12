@@ -1,9 +1,9 @@
 import Client from './api'
 
-// Example - should return an array
+
 export const GetReviewsByCarId = async (carId) => {
   const res = await Client.get(`/reviews/car/${carId}`)
-  return res.data // should be the array directly
+  return res.data 
 }
 
 

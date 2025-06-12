@@ -26,14 +26,13 @@ const Signup = ({ setUser }) => {
       lastName,
       email,
       password,
-      img // Optional, include only if uploading
+      img 
     })
     alert(`Signed up as: ${firstName} ${lastName} (${email})`)
     navigate('/signin')
   }
 
   const onGoogleSignUp = () => {
-    // Handle Google Sign Up here
     alert('Google Sign Up is not implemented yet.')
   }
 
@@ -124,20 +123,6 @@ const Signup = ({ setUser }) => {
         </button>
       </form>
       <div style={{ width: "100%", display: "flex", justifyContent: "center" }}>
-        {/* <button
-          type="button"
-          className="google-signup-btn"
-          onClick={onGoogleSignUp}
-        >
-          {/* {/* <span style={{
-            display: "inline-block",
-            width: 22,
-            height: 22,
-            marginRight: 10,
-            background: "url('https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg') no-repeat center center/contain"
-          }} />
-          Sign Up with Google */}
-        {/* </button>   */}
       </div>
     </div>
   )

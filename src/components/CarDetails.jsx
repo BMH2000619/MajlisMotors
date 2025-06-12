@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import CarReviews from './CarReviews'
 import ReviewForm from './ReviewForm'
-import Client from '../services/api' // Axios instance
+import Client from '../services/api' 
 
 const CarDetails = ({ user }) => {
   console.log('CarDetails user:', user)
