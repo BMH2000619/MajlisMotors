@@ -19,7 +19,7 @@ const CarBrands = ({ brands, onBrandClick }) => {
               key={brand._id}
               className="car-brand-item"
               style={{ cursor: 'pointer' }}
-              onClick={() => onBrandClick(brand)} // Pass full object
+              onClick={() => onBrandClick(brand)} 
             >
               {brand.name}
             </li>

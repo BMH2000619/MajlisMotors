@@ -80,7 +80,6 @@ const App = () => {
   const [brands, setBrands] = useState([])
   const [cars, setCars] = useState([])
 
-  // Load brands
   useEffect(() => {
     const fetchBrands = async () => {
       try {
@@ -93,7 +92,6 @@ const App = () => {
     fetchBrands()
   }, [])
 
-  // Load cars
   useEffect(() => {
     const fetchCars = async () => {
       try {

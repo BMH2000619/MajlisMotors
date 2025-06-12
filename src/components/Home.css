@@ -1,4 +1,3 @@
-/* Remove the .home-section styles */
 .home-root {
   min-height: 100vh;
   background: linear-gradient(120deg, #f4f6fb 60%, #e3e6f0 100%);
@@ -17,7 +16,7 @@
 .home-title {
   font-size: 2.5rem;
   font-weight: 800;
-  color: rgb(74, 0, 128); /* dark violet */
+  color: rgb(74, 0, 128); 
   margin-bottom: 12px;
   letter-spacing: 1px;
 }
@@ -28,7 +27,7 @@
   margin-top: 0;
 }
 
-/* .home-section styles have been removed */
+
 
 .home-section-title {
   color: #1a237e;
@@ -46,7 +45,7 @@
   max-width: 700px;
   margin: 32px auto 0 auto;
   padding: 20px 24px;
-  background: rgba(138, 43, 226, 0.92); /* violet, semi-transparent */
+  background: rgba(138, 43, 226, 0.92); 
   border-radius: 14px;
   box-shadow: 0 4px 24px rgba(138, 43, 226, 0.18);
   text-align: center;
@@ -54,7 +53,7 @@
 }
 
 .car-brands-toggle {
-  background: rgb(74, 0, 128); /* dark violet */
+  background: rgb(74, 0, 128); 
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -67,5 +66,5 @@
 }
 
 .car-brands-toggle:hover {
-  background: rgb(138, 43, 226); /* lighter violet on hover */
+  background: rgb(138, 43, 226); 
 }

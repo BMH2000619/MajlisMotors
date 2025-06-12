@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import defaultProfilePic from '../../public/images/default-profile.jpg'
 import './profile.css'
-import Client from '../services/api' // Axios instance
+import Client from '../services/api' 
 
 const BACKEND_URL = "http://localhost:3001"
 
@@ -14,7 +14,6 @@ const Profile = ({ user, setUser }) => {
   const [saving, setSaving] = useState(false)
   const [error, setError] = useState('')
 
-  // Sync localUser with user prop
   useEffect(() => {
     if (user) {
       setLocalUser(user)
@@ -37,7 +36,6 @@ const Profile = ({ user, setUser }) => {
       const formData = new FormData()
       formData.append('firstName', firstName)
       formData.append('lastName', lastName)
-      // Only append if a new file was selected
       if (
         profilePic &&
         profilePic !== defaultProfilePic &&

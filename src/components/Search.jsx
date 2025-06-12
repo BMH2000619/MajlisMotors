@@ -7,7 +7,6 @@ const Search = ({ onSearch }) => {
     e.preventDefault()
     if (query.trim() === "") return
     onSearch(query)
-    // Open YouTube search in a new tab as well
     window.open(
       `https://www.youtube.com/results?search_query=${encodeURIComponent(
         query + " car review"
