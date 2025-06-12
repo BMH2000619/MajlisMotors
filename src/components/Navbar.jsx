@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import profilePic from '../../public/images/dodge.jpg'
+import profilePic from '../../public/images/default-profile.jpg'
 
 const Navbar = ({ user, setUser }) => {
   const location = useLocation()

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import defaultProfilePic from '../../public/images/dodge.jpg'
+import defaultProfilePic from '../../public/images/default-profile.jpg'
 import './profile.css'
 import Client from '../services/api' 
 

@@ -4,40 +4,41 @@ import { PostReview } from '../services/ShowReview'
 const ReviewForm = ({ carId, token, onReviewPosted }) => {
   const [comment, setComment] = useState('')
   const [rating, setRating] = useState(0)
+  const [submitting, setSubmitting] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    if (!comment.trim() || !rating) return
+    setSubmitting(true)
     try {
       await PostReview({ carId, comment, rating }, token)
       setComment('')
       setRating(0)
-      onReviewPosted()
+      if (onReviewPosted) onReviewPosted()
     } catch (err) {
-      console.error('Failed to post review:', err)
+      alert('Failed to submit review.')
     }
+    setSubmitting(false)
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginTop: '20px' }}>
+    <form onSubmit={handleSubmit} className="car-reviews-form">
       <h4>Write a Review</h4>
       <textarea
         value={comment}
         onChange={(e) => setComment(e.target.value)}
         placeholder="Write your review here..."
         required
-        style={{ width: '100%', minHeight: '80px' }}
+        className="car-reviews-textarea"
+        style={{ minHeight: '80px' }}
       />
-      <br />
-      <div style={{ margin: '10px 0' }}>
-        <span>Rating: </span>
+      <div className="car-reviews-rating-row">
+        <span className="car-reviews-rating-label">Rating: </span>
         {[1, 2, 3, 4, 5].map((num) => (
           <span
             key={num}
-            style={{
-              cursor: 'pointer',
-              color: num <= rating ? '#FFD700' : '#ccc',
-              fontSize: '1.5em'
-            }}
+            className={`car-reviews-star${num <= rating ? ' active' : ''}`}
+            style={{ fontSize: '1.5em' }}
             onClick={() => setRating(num)}
             role="button"
             tabIndex={0}
@@ -50,9 +51,12 @@ const ReviewForm = ({ carId, token, onReviewPosted }) => {
           </span>
         ))}
       </div>
-      <br />
-      <button type="submit" style={{ marginTop: '10px' }}>
-        Submit Review
+      <button
+        type="submit"
+        className="car-reviews-submit-btn"
+        disabled={submitting}
+      >
+        {submitting ? 'Submitting...' : 'Submit Review'}
       </button>
     </form>
   )

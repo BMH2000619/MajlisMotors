@@ -4,6 +4,7 @@ import CarReviews from './CarReviews'
 import ReviewForm from './ReviewForm'
 import Client from '../services/api' 
 
+
 const CarDetails = ({ user }) => {
   console.log('CarDetails user:', user)
   const { carId } = useParams()
@@ -72,24 +73,25 @@ const CarDetails = ({ user }) => {
         </div>
       </div>
 
-      <CarReviews
-        carId={car._id}
-        refresh={refreshReviews}
-        user={user}
-        onReviewChanged={triggerRefresh}
-      />
-
-      {user ? (
-        <ReviewForm
+      <div className="car-reviews-container">
+        {user ? (
+          <ReviewForm
+            carId={car._id}
+            token={user.token}
+            onReviewPosted={triggerRefresh}
+          />
+        ) : (
+          <p style={{ textAlign: 'center', marginBottom: 18 }}>
+            <a href="/signin">Sign in</a> to write a review.
+          </p>
+        )}
+        <CarReviews
           carId={car._id}
-          token={user.token}
-          onReviewPosted={triggerRefresh}
+          refresh={refreshReviews}
+          user={user}
+          onReviewChanged={triggerRefresh}
         />
-      ) : (
-        <p>
-          <a href="/signin">Sign in</a> to write a review.
-        </p>
-      )}
+      </div>
     </section>
   )
 }
